@@ -122,7 +122,7 @@ Vagrant.configure(2) do |config|
             azure.resource_group_name = 'dev-ad-sql2016dbrs-crm20168.1.1'
             azure.vm_managed_image_id = "/subscriptions/#{ENV['ARM_SUBSCRIPTION_ID']}/resourceGroups/CommonRG/providers/Microsoft.Compute/images/win2016-crm-code"
             azure.instance_ready_timeout = 3600
-            azure.vm_name = 'CRM01'
+            azure.vm_name = 'crm01'
             azure.location = 'WestUS2'
             azure.vm_size = 'Standard_DS2_v2'
             azure.admin_username = "vagrant"
@@ -151,14 +151,13 @@ Vagrant.configure(2) do |config|
         vm_config.vm.provision :file, source: "../../../src/crmsetup/crm_customizations-1.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/crm_customizations-1.ps1"
         vm_config.vm.provision :file, source: "../../../src/crmsetup/crm_customizations-2.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/crm_customizations-2.ps1"
 
-        vm_config.vm.provision :shell, path: "../crmdomainclientgroups.ps1", env: { "SPDEVOPSSTARTER_TRIALS" => 100 }
         vm_config.vm.provision :file, source: "../../../src/crmsetup/crmsetup.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/crmsetup.ps1"
         vm_config.vm.provision :file, source: "../../../src/crmsetup/crmsetupinvoker.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/crmsetupinvoker.ps1"
-        vm_config.vm.provision :shell, inline: "powershell -command 'cd c:/projects/vm-devops-starter/src/crmsetup; .\\crmsetupinvoker.ps1; Get-Date; Sleep 1800'"
+        vm_config.vm.provision :shell, inline: "powershell -command 'cd c:/projects/vm-devops-starter/src/crmsetup; .\\crmsetupinvoker.ps1; Get-Date'"
         vm_config.vm.provision "reload"        
         vm_config.vm.provision :file, source: "../../../src/crmsetup/crmservicepacksetup8.1.1.1005.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/crmservicepacksetup8.1.1.1005.ps1"
         vm_config.vm.provision :file, source: "../../../src/crmsetup/crmservicepacksetup8.1.1.1005invoker.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/crmservicepacksetup8.1.1.1005invoker.ps1"
-        vm_config.vm.provision :shell, inline: "powershell -command 'cd c:/projects/vm-devops-starter/src/crmsetup; .\\crmservicepacksetup8.1.1.1005invoker.ps1; Sleep 120'"
+        vm_config.vm.provision :shell, inline: "powershell -command 'cd c:/projects/vm-devops-starter/src/crmsetup; .\\crmservicepacksetup8.1.1.1005invoker.ps1'"
         #vm_config.vm.provision :file, source: "../../../src/crmsetup/crm_customizations-1.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/crm_customizations-1.ps1"
         vm_config.vm.provision :file, source: "../../../src/crmsetup/crm_customizations-1invoker.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/crm_customizations-1invoker.ps1"
         vm_config.vm.provision :shell, inline: "powershell -command 'cd c:/projects/vm-devops-starter/src/crmsetup; .\\crm_customizations-1invoker.ps1'"
