@@ -16,11 +16,23 @@ try
             [Parameter(Mandatory=$true)]
             [ValidateNotNullorEmpty()]
             [PSCredential]
-            $CRMSandboxAccountCredential,
+            $DeploymentServiceAccountCredential,
             [Parameter(Mandatory=$true)]
             [ValidateNotNullorEmpty()]
             [PSCredential]
-            $CRMVSSWriterAccountCredential
+            $SandboxServiceAccountCredential,
+            [Parameter(Mandatory=$true)]
+            [ValidateNotNullorEmpty()]
+            [PSCredential]
+            $VSSWriterServiceAccountCredential,
+            [Parameter(Mandatory=$true)]
+            [ValidateNotNullorEmpty()]
+            [PSCredential]
+            $AsyncServiceAccountCredential,
+            [Parameter(Mandatory=$true)]
+            [ValidateNotNullorEmpty()]
+            [PSCredential]
+            $MonitoringServiceAccountCredential
         )
         Import-DscResource -ModuleName PSDesiredStateConfiguration
         Import-DscResource -ModuleName xActiveDirectory -ModuleVersion 2.21.0.0
@@ -46,54 +58,75 @@ try
                 PasswordNeverExpires    = $true
             }
 
-            xADUser CRMSandboxAccountUser
+            xADUser DeploymentServiceAccountUser
             {
                 DomainName              = $domainName
-                UserName                = $CRMSandboxAccountCredential.GetNetworkCredential().UserName
-                Password                = $CRMSandboxAccountCredential
+                UserName                = $DeploymentServiceAccountCredential.GetNetworkCredential().UserName
+                Password                = $DeploymentServiceAccountCredential
                 PasswordNeverExpires    = $true
             }
 
-            xADUser CRMVSSWriterAccountUser
+            xADUser SandboxServiceAccountUser
             {
                 DomainName              = $domainName
-                UserName                = $CRMVSSWriterAccountCredential.GetNetworkCredential().UserName
-                Password                = $CRMVSSWriterAccountCredential
+                UserName                = $SandboxServiceAccountCredential.GetNetworkCredential().UserName
+                Password                = $SandboxServiceAccountCredential
                 PasswordNeverExpires    = $true
             }
 
-            xADGroup CRMAdminGroup
+            xADUser VSSWriterServiceAccountUser
             {
-                GroupName           = "OG CRM Server Admin Prod"
-                MembersToInclude    = $CRMInstallAccountCredential.GetNetworkCredential().UserName
-                DependsOn           = "[xADUser]CRMInstallAccountUser"
+                DomainName              = $domainName
+                UserName                = $VSSWriterServiceAccountCredential.GetNetworkCredential().UserName
+                Password                = $VSSWriterServiceAccountCredential
+                PasswordNeverExpires    = $true
+            }
+
+            xADUser AsyncServiceAccountUser
+            {
+                DomainName              = $domainName
+                UserName                = $AsyncServiceAccountCredential.GetNetworkCredential().UserName
+                Password                = $AsyncServiceAccountCredential
+                PasswordNeverExpires    = $true
+            }
+
+            xADUser MonitoringServiceAccountUser
+            {
+                DomainName              = $domainName
+                UserName                = $MonitoringServiceAccountCredential.GetNetworkCredential().UserName
+                Password                = $MonitoringServiceAccountCredential
+                PasswordNeverExpires    = $true
             }
 
             xADGroup CRMPrivUserGroup
             {
                 GroupName           = "CRM01PrivUserGroup"
                 MembersToInclude    = $CRMInstallAccountCredential.GetNetworkCredential().UserName
+                GroupScope          = "Universal"
                 DependsOn           = "[xADUser]CRMInstallAccountUser"
             }
             
             xADGroup CRMSQLAccessGroup
             {
-                GroupName           = "CRM01SQLAccessGroup"
+                GroupName   = "CRM01SQLAccessGroup"
+                GroupScope  = "Universal"
             }
 
             xADGroup CRMUserGroup
             {
-                GroupName           = "CRM01UserGroup"
+                GroupName   = "CRM01UserGroup"
             }
 
             xADGroup CRMReportingGroup
             {
-                GroupName           = "CRM01ReportingGroup"
+                GroupName   = "CRM01ReportingGroup"
+                GroupScope  = "Universal"
             }
 
             xADGroup CRMPrivReportingGroup
             {
-                GroupName           = "CRM01PrivReportingGroup"
+                GroupName   = "CRM01PrivReportingGroup"
+                GroupScope  = "Universal"
             }
 
             xADOrganizationalUnit CRMGroupsOU
@@ -106,7 +139,7 @@ try
             {
                 Ensure                             = 'Present'
                 Path                               = 'OU=CRM groups,DC=contoso,DC=local'
-                IdentityReference                  = 'contoso\OG CRM Server Admin Prod'
+                IdentityReference                  = 'contoso\CRM01PrivUserGroup'
                 ActiveDirectoryRights              = 'GenericAll'
                 AccessControlType                  = 'Allow'
                 ObjectType                         = '00000000-0000-0000-0000-000000000000'
@@ -116,15 +149,8 @@ try
         
             xADGroup EnterpriseAdminGroup
             {
-                GroupName           = "Enterprise Admins"
+                GroupName   = "Enterprise Admins"
                 MembersToInclude    = $CRMInstallAccountCredential.GetNetworkCredential().UserName
-            }
-
-            xADGroup SQLAdminGroup
-            {
-                GroupName           = "SQLAdmins"
-                MembersToInclude    = "OG CRM Server Admin Prod"
-                DependsOn           = "[xADGroup]CRMAdminGroup"
             }
 
         }
@@ -143,8 +169,11 @@ $configurationData = @{ AllNodes = @(
 $securedPassword = ConvertTo-SecureString "c0mp1Expa~~" -AsPlainText -Force
 $CRMInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmadmin", $securedPassword );
 $CRMServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmsrv", $securedPassword );
-$CRMSandboxAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmsandbox", $securedPassword );
-$CRMVSSWriterAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmvsswrit", $securedPassword );
+$DeploymentServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmdplsrv", $securedPassword );
+$SandboxServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmsandbox", $securedPassword );
+$VSSWriterServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmvsswrit", $securedPassword );
+$AsyncServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmasync", $securedPassword );
+$MonitoringServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmmon", $securedPassword );
 Write-Host "$(Get-Date) Compiling DSC"
 try
 {
@@ -152,8 +181,11 @@ try
         -ConfigurationData $configurationData `
         -CRMInstallAccountCredential $CRMInstallAccountCredential `
         -CRMServiceAccountCredential $CRMServiceAccountCredential `
-        -CRMSandboxAccountCredential $CRMSandboxAccountCredential `
-        -CRMVSSWriterAccountCredential $CRMVSSWriterAccountCredential;
+        -DeploymentServiceAccountCredential $DeploymentServiceAccountCredential `
+        -SandboxServiceAccountCredential $SandboxServiceAccountCredential `
+        -VSSWriterServiceAccountCredential $VSSWriterServiceAccountCredential `
+        -AsyncServiceAccountCredential $AsyncServiceAccountCredential `
+        -MonitoringServiceAccountCredential $MonitoringServiceAccountCredential;
 }
 catch
 {

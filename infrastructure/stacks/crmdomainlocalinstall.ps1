@@ -1,4 +1,4 @@
-$configName = "CRMMedia"
+$configName = "CRMDomainLocalInstall"
 Write-Host "$(Get-Date) Defining DSC"
 try
 {
@@ -6,25 +6,24 @@ try
     {
         param(
         )
-
         Import-DscResource -ModuleName PSDesiredStateConfiguration
-        Import-DscResource -ModuleName xPSDesiredStateConfiguration -Name xRemoteFile -ModuleVersion 8.4.0.0
+        Import-DscResource -ModuleName xActiveDirectory -ModuleVersion 2.21.0.0
+
+        $domainName = "contoso.local";
 
         Node $AllNodes.NodeName
         {
 
-            if ( $env:SPDEVOPSSTARTER_LOCALCRM -eq 1 )
+            xADGroup AdminGroup
             {
+                GroupName           = "Administrators"
+                MembersToInclude    = "CRM01PrivUserGroup"
+            }
 
-            } else {
-
-                xRemoteFile Dynamics90Downloaded
-                {
-                    Uri             = "https://download.microsoft.com/download/B/D/0/BD0FA814-9885-422A-BA0E-54CBB98C8A33/CRM9.0-Server-ENU-amd64.exe"
-                    DestinationPath = "C:\Install\CRM\CRM9.0-Server-ENU-amd64.exe"
-                    MatchSource     = $false
-                }
-                
+            xADGroup PerformanceUserGroup
+            {
+                GroupName           = "Performance Log Users"
+                MembersToInclude    = "_crmasync", "_crmsrv"
             }
 
         }
@@ -39,6 +38,7 @@ catch
 $configurationData = @{ AllNodes = @(
     @{ NodeName = $env:COMPUTERNAME; PSDscAllowPlainTextPassword = $True; PsDscAllowDomainUser = $True }
 ) }
+
 Write-Host "$(Get-Date) Compiling DSC"
 try
 {

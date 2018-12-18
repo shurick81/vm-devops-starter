@@ -22,7 +22,7 @@ try
             $securedPassword = ConvertTo-SecureString $pfxPassword -AsPlainText -Force
             $pfxCredential = New-Object System.Management.Automation.PSCredential( "fake", $securedPassword )
 
-            $hostName = "CRM01.contoso.local";
+            $hostName = "$env:COMPUTERNAME.contoso.local";
             $pfxPath = "c:\certs\$hostName.pfx";
             $cerPath = "c:\certs\$hostName.cer";
             $pfx = New-Object -TypeName "System.Security.Cryptography.X509Certificates.X509Certificate2";
@@ -68,7 +68,7 @@ try
                         Port = 443
                         CertificateThumbprint = $pfx.thumbprint
                         CertificateStoreName = "My"
-                        HostName = "CRM01.contoso.local"
+                        HostName = "$env:COMPUTERNAME.contoso.local"
                         SslFlags = 1
                     }
                 )
@@ -77,7 +77,7 @@ try
             Registry CrmLocalZone
             {
                 Ensure                  = "Present"
-                Key                     = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap\Domains\CRM01.contoso.local"
+                Key                     = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap\Domains\$env:COMPUTERNAME.contoso.local"
                 ValueName               = "https"
                 ValueType               = "DWord"
                 ValueData               = "1"

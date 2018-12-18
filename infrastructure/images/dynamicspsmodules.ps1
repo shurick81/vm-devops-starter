@@ -49,6 +49,15 @@ try
                 RequiredVersion     = "1.4.0.0"
             }
 
+            PSModule "PSModule_Dynamics365Configuration"
+            {
+                Ensure              = "Present"
+                Name                = "Dynamics365Configuration"
+                Repository          = "PSGallery"
+                InstallationPolicy  = "Trusted"
+                RequiredVersion     = "0.6"
+            }
+
         }
     }
 }
