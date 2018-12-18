@@ -45,7 +45,7 @@ pass: `c0mp1Expa~~`
 ## Resetting SQL and SP machine
 
 ```
-vagrant destroy DB01, DBDYN01 --force
+vagrant destroy DBDYN01 --force
 vagrant up
 ```
 
