@@ -26,6 +26,32 @@ try
                 MembersToInclude    = "_crmasync", "_crmsrv"
             }
 
+            Registry CredSSPAllowNTLM
+            {
+                Ensure      = "Present"
+                Key         = "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CredentialsDelegation"
+                ValueName   = "AllowFreshCredentialsWhenNTLMOnly"
+                ValueType   = "DWORD"
+                ValueData   = "1"
+            }
+
+            Registry CredSSPConcatenateNTLM
+            {
+                Ensure      = "Present"
+                Key         = "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CredentialsDelegation"
+                ValueName   = "ConcatenateDefaults_AllowFreshNTLMOnly"
+                ValueType   = "DWORD"
+                ValueData   = "1"
+            }
+
+            Registry CredSSPContoso
+            {
+                Ensure      = "Present"
+                Key         = "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CredentialsDelegation\AllowFreshCredentialsWhenNTLMOnly"
+                ValueName   = "1"
+                ValueData   = "wsman/*.contoso.local"
+            }
+
         }
     }
 }
