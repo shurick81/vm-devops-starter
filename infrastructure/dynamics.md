@@ -34,7 +34,7 @@ choco install -y virtualbox
 
 ## PowerShell
 `cd` to `images` directory and run `.\preparevmimages.ps1 win2016-ad, win2016-dbrs-dynamics-code, win2016-ad-dbrs-dynamics-code`
-`cd` to `stacks/dev-ad-dbrsdynamics90code` directory or to `stacks/dev-addbrsdynamics90code` directory.
+`cd` to `stacks/dev-ad-dbrsdynamicscode` directory or to `stacks/dev-addbrsdynamicscode` directory.
 
 If PowerShell scripts are allowed on the machine, run `..\localdeploy.ps1`. Otherwise run `vagrant up`.
 
