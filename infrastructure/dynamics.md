@@ -54,6 +54,7 @@ vagrant up
 ```
 
 ## Cleaning up
+
 `cd` to `stacks/dev-addbrsdynamicscode` directory and run `vagrant destroy --force`
 `cd` to `images` directory and run `removevmimages.ps1 win2016-ad-dbrs-dynamics-code`
 

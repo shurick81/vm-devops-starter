@@ -98,60 +98,66 @@ try
                 PasswordNeverExpires    = $true
             }
 
-            xADGroup CRMPrivUserGroup
-            {
-                GroupName           = "CRM01PrivUserGroup"
-                MembersToInclude    = $CRMInstallAccountCredential.GetNetworkCredential().UserName
-                GroupScope          = "Universal"
-                DependsOn           = "[xADUser]CRMInstallAccountUser"
-            }
-            
-            xADGroup CRMSQLAccessGroup
-            {
-                GroupName   = "CRM01SQLAccessGroup"
-                GroupScope  = "Universal"
-            }
-
-            xADGroup CRMUserGroup
-            {
-                GroupName   = "CRM01UserGroup"
-            }
-
-            xADGroup CRMReportingGroup
-            {
-                GroupName   = "CRM01ReportingGroup"
-                GroupScope  = "Universal"
-            }
-
-            xADGroup CRMPrivReportingGroup
-            {
-                GroupName   = "CRM01PrivReportingGroup"
-                GroupScope  = "Universal"
-            }
-
             xADOrganizationalUnit CRMGroupsOU
             {
                Name = "CRM groups"
                Path = "DC=contoso,DC=local"
             }
 
+            xADGroup CRMPrivUserGroup
+            {
+                GroupName           = "CRM01PrivUserGroup"
+                MembersToInclude    = $CRMInstallAccountCredential.GetNetworkCredential().UserName
+                GroupScope          = "Universal"
+                Path                = 'OU=CRM groups,DC=contoso,DC=local'
+                DependsOn           = "[xADUser]CRMInstallAccountUser"
+            }
+            
             xADObjectPermissionEntry OUPermissions
             {
-                Ensure                             = 'Present'
-                Path                               = 'OU=CRM groups,DC=contoso,DC=local'
-                IdentityReference                  = 'contoso\CRM01PrivUserGroup'
-                ActiveDirectoryRights              = 'GenericAll'
-                AccessControlType                  = 'Allow'
-                ObjectType                         = '00000000-0000-0000-0000-000000000000'
-                ActiveDirectorySecurityInheritance = 'None'
-                InheritedObjectType                = '00000000-0000-0000-0000-000000000000'
+                Ensure                              = 'Present'
+                Path                                = 'OU=CRM groups,DC=contoso,DC=local'
+                IdentityReference                   = 'contoso\CRM01PrivUserGroup'
+                ActiveDirectoryRights               = 'GenericAll'
+                AccessControlType                   = 'Allow'
+                ObjectType                          = '00000000-0000-0000-0000-000000000000'
+                ActiveDirectorySecurityInheritance  = 'All'
+                InheritedObjectType                 = '00000000-0000-0000-0000-000000000000'
+                DependsOn                           = "[xADGroup]CRMPrivUserGroup"
             }
         
-            xADGroup EnterpriseAdminGroup
+            xADGroup CRMSQLAccessGroup
             {
-                GroupName   = "Enterprise Admins"
-                MembersToInclude    = $CRMInstallAccountCredential.GetNetworkCredential().UserName
+                GroupName   = "CRM01SQLAccessGroup"
+                GroupScope  = "Universal"
+                Path        = 'OU=CRM groups,DC=contoso,DC=local'
             }
+
+            xADGroup CRMUserGroup
+            {
+                GroupName   = "CRM01UserGroup"
+                Path        = 'OU=CRM groups,DC=contoso,DC=local'
+            }
+
+            xADGroup CRMReportingGroup
+            {
+                GroupName   = "CRM01ReportingGroup"
+                GroupScope  = "Universal"
+                Path        = 'OU=CRM groups,DC=contoso,DC=local'
+            }
+
+            xADGroup CRMPrivReportingGroup
+            {
+                GroupName   = "CRM01PrivReportingGroup"
+                GroupScope  = "Universal"
+                Path        = 'OU=CRM groups,DC=contoso,DC=local'
+            }
+
+#            xADGroup EnterpriseAdminGroup
+#            {
+#                GroupName   = "Enterprise Admins"
+#                MembersToInclude    = $CRMInstallAccountCredential.GetNetworkCredential().UserName
+#            }
 
         }
     }

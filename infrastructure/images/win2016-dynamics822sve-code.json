@@ -14,13 +14,11 @@
             "guest_additions_mode": "attach",
             "guest_os_type": "Windows2016_64",
             "headless": true,
-            "http_directory": "http",
             "shutdown_command": "a:/sysprep.bat",
             "vboxmanage": [
-                [ "modifyvm", "{{.Name}}", "--memory", "4096" ],
+                [ "modifyvm", "{{.Name}}", "--memory", "2048" ],
                 [ "modifyvm", "{{.Name}}", "--cpus", "4" ]
             ],
-            "disk_size": 102400,
             "communicator": "winrm",
             "winrm_username": "packer",
             "winrm_password": "Fractalsol365",
@@ -38,11 +36,9 @@
                 "autounattend_sysprep.xml"
             ],
             "headless": true,
-            "http_directory": "http",
             "shutdown_command": "a:/sysprep.bat",
-            "ram_size": 4096,
+            "ram_size": 2048,
             "cpu": 4,
-            "disk_size": 102400,
             "switch_name": "Default Switch",
             "communicator": "winrm",
             "winrm_username": "packer",
@@ -93,8 +89,6 @@
             "script": "rdpenable.ps1",
             "only": ["virtualbox-iso","hyperv-iso"]
         },
-        { "type": "powershell", "script": "nodefender.ps1" },
-        { "type": "windows-restart" },
         {
             "type": "powershell",
             "script": "winrm.ps1",
@@ -103,6 +97,18 @@
         { "type": "powershell", "script": "PackageManagementProviderResource.ps1" },
         { "type": "powershell", "script": "basepsmodules.ps1" },
         { "type": "powershell", "script": "domainclientpsmodules.ps1" },
+        { "type": "powershell", "script": "dynamicspsmodules.ps1" },
+        { "type": "powershell", "script": "devpsmodules.ps1" },
+        { "type": "powershell", "script": "nodefender.ps1" },
+        { "type": "windows-restart" },
+        { "type": "powershell", "inline": "Save-Dynamics365Resource -Resource CRM2016RTMSve -TargetDirectory c:/Install/Dynamics/CRM2016RTMSve;" },
+        { "type": "powershell", "inline": "Save-Dynamics365Resource -Resource CRM2016ServicePack2Update02Sve -TargetDirectory c:/Install/Dynamics/CRM2016ServicePack2Update02Sve;" },
+        { "type": "powershell", "inline": "Install-Dynamics365Prerequisites;" },
+        { "type": "powershell", "script": "devmedia.ps1" },
+        { "type": "powershell", "script": "devbin-1.ps1" },
+        { "type": "windows-restart" },
+        { "type": "powershell", "script": "devmediaclean.ps1" },
+        { "type": "powershell", "script": "devbin-2.ps1" },
         { "type": "powershell", "script": "xcredserver.ps1" },
         { "type": "powershell", "script": "waitforcpucalm.ps1" },
         {
@@ -118,7 +124,7 @@
         }
     ],
     "variables": {
-        "box_name": "win2016-soe",
+        "box_name": "win2016-dynamics822sve-code",
         "client_id": "{{env `ARM_CLIENT_ID`}}",
         "client_secret": "{{env `ARM_CLIENT_SECRET`}}",
         "subscription_id": "{{env `ARM_SUBSCRIPTION_ID`}}",

@@ -1,4 +1,4 @@
-$configName = "SPDomain"
+$configName = "RSConfig"
 Write-Host "$(Get-Date) Defining DSC"
 try
 {
@@ -82,6 +82,18 @@ try
                 LocalPort   = 80
                 Protocol    = "TCP"
                 Description = "Firewall rule to allow web sites publishing"
+            }
+            
+            xFireWall WMI-WINMGMT-In-TCP
+            {
+                Name        = "WMI-WINMGMT-In-TCP"
+                Enabled     = "True"
+            }
+            
+            xFireWall WMI-RPCSS-In-TCP
+            {
+                Name        = "WMI-RPCSS-In-TCP"
+                Enabled     = "True"
             }
             
         }

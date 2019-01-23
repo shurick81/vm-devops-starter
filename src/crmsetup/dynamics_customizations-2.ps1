@@ -21,7 +21,7 @@ $WebAddressSettings
 $CrmOrganization = Get-CrmOrganization
 Write-Host "Effective CrmOrganization:"
 $CrmOrganization
-Set-Content -Path "C:\Install\CRM\OrganizationId.txt" $CrmOrganization.Id
+Set-Content -Path "c:\Install\Dynamics\OrganizationId.txt" $CrmOrganization.Id
 
 if($RemoveSnapInWhenDone)
 {

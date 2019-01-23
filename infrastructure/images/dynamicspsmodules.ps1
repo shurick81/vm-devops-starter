@@ -55,7 +55,7 @@ try
                 Name                = "Dynamics365Configuration"
                 Repository          = "PSGallery"
                 InstallationPolicy  = "Trusted"
-                RequiredVersion     = "0.6"
+                RequiredVersion     = "0.9"
             }
 
         }

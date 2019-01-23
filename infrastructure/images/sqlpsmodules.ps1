@@ -40,6 +40,15 @@ try
                 RequiredVersion     = "5.6.0.0"
             }
 
+            PSModule "PSModule_SqlServer"
+            {
+                Ensure              = "Present"
+                Name                = "SqlServer"
+                Repository          = "PSGallery"
+                InstallationPolicy  = "Trusted"
+                RequiredVersion     = "21.1.18068"
+            }
+
             PSModule "PSModule_SqlServerDsc"
             {
                 Ensure              = "Present"
