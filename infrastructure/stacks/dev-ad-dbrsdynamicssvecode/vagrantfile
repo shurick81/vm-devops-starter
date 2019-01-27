@@ -101,8 +101,8 @@ Vagrant.configure(2) do |config|
         vm_config.vm.provision :shell, path: "../../../src/sqlprovision/rsconfig.ps1"
         vm_config.vm.provision :shell, path: "../../../src/sqlprovision/rsserviceaccountupdate.ps1"
 
-#        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovision.ps1"
-        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovisionsve.ps1"
+        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovision.ps1"
+#        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovisionsve.ps1"
 #        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovisionsvelp.ps1"
 
         vm_config.vm.provision :file, source: "../../../src/crmsetup/dynamics_customizations-1.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/dynamics_customizations-1.ps1"
