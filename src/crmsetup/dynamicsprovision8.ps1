@@ -8,7 +8,7 @@ $VSSWriterServiceAccountCredential = New-Object System.Management.Automation.PSC
 $AsyncServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmasync", $securedPassword );
 $MonitoringServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmmon", $securedPassword );
 Install-Dynamics365Server `
-    -MediaDir c:\Install\Dynamics\Dynamics365Server90RTMEnu `
+    -MediaDir c:\Install\Dynamics\CRM2016RTMEnu `
     -LicenseKey KKNV2-4YYK8-D8HWD-GDRMW-29YTW `
     -InstallDir "c:\Program Files\Microsoft Dynamics CRM" `
     -CreateDatabase `
@@ -36,3 +36,4 @@ Install-Dynamics365Server `
     -OrganizationCollation Latin1_General_CI_AI `
     -ReportingUrl http://$dbHostName/ReportServer_SPIntra01 `
     -InstallAccount $CRMInstallAccountCredential
+Install-Dynamics365Update -MediaDir C:\Install\Dynamics\CRM2016ServicePack2Update02Enu -InstallAccount $CRMInstallAccountCredential

@@ -14,6 +14,8 @@ Vagrant.configure(2) do |config|
             #vb.gui = true
             vb.memory = "12288"
             vb.cpus = 4
+            vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"] 
+            vb.customize ["modifyvm", :id, "--vram", "32"] 
         end
         vm_config.vm.provider "hyperv" do |hv, override|
             hv.memory = "4096"
@@ -26,7 +28,7 @@ Vagrant.configure(2) do |config|
             azure.client_secret = ENV['ARM_CLIENT_SECRET']
             azure.subscription_id = ENV['ARM_SUBSCRIPTION_ID']
             azure.resource_group_name = 'dev-addbrsdynamicssvecode'
-            azure.vm_managed_image_id = "/subscriptions/#{ENV['ARM_SUBSCRIPTION_ID']}/resourceGroups/CommonRG/providers/Microsoft.Compute/images/win2016-ad-dbrs-dynamics-code"
+            azure.vm_managed_image_id = "/subscriptions/#{ENV['ARM_SUBSCRIPTION_ID']}/resourceGroups/CommonRG/providers/Microsoft.Compute/images/win2016-ad-dbrs-dynamicssve-code"
             azure.instance_ready_timeout = 3600
             azure.vm_name = 'addbdyn01'
             azure.location = 'WestUS2'
@@ -60,7 +62,11 @@ Vagrant.configure(2) do |config|
         vm_config.vm.provision :shell, path: "../sqlconfig.ps1"
         vm_config.vm.provision :shell, path: "../crmsslselfsignedcert.ps1"
         vm_config.vm.provision :shell, path: "../../../src/sqlprovision/rsconfig.ps1"
-        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovision.ps1"
+        vm_config.vm.provision :shell, path: "../../../src/sqlprovision/rsserviceaccountupdate.ps1"
+
+#        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovision.ps1"
+#        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovisionsve.ps1"
+#        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovisionsvelp.ps1"
 
         vm_config.vm.provision :file, source: "../../../src/crmsetup/dynamics_customizations-1.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/dynamics_customizations-1.ps1"
         vm_config.vm.provision :file, source: "../../../src/crmsetup/dynamics_customizations-1invoker.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/dynamics_customizations-1invoker.ps1"

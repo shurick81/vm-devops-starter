@@ -50,7 +50,7 @@ try
                 SQMReporting            = "False"
                 ErrorReporting          = "True"
                 BrowserSvcStartupType   = "Automatic"
-                SQLCollation            = "Finnish_Swedish_CI_AS_KS_WS"
+                SQLCollation            = "Latin1_General_CI_AI"#Finnish_Swedish_CI_AS_KS_WS"
             }
 
             SqlServerMemory SQLServerMaxMemoryIs2GB

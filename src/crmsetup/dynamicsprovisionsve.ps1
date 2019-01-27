@@ -8,7 +8,7 @@ $VSSWriterServiceAccountCredential = New-Object System.Management.Automation.PSC
 $AsyncServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmasync", $securedPassword );
 $MonitoringServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmmon", $securedPassword );
 Install-Dynamics365Server `
-    -MediaDir c:\Install\Dynamics\Dynamics365Server90RTMEnu `
+    -MediaDir c:\Install\Dynamics\Dynamics365Server90RTMSve `
     -LicenseKey KKNV2-4YYK8-D8HWD-GDRMW-29YTW `
     -InstallDir "c:\Program Files\Microsoft Dynamics CRM" `
     -CreateDatabase `
@@ -29,10 +29,10 @@ Install-Dynamics365Server `
     -WebSiteUrl https://$env:COMPUTERNAME.contoso.local `
     -Organization "Contoso Ltd." `
     -OrganizationUniqueName Contoso `
-    -BaseISOCurrencyCode USD `
-    -BaseCurrencyName "US Dollar" `
-    -BaseCurrencySymbol  `$
+    -BaseISOCurrencyCode SEK `
+    -BaseCurrencyName "Svensk krona" `
+    -BaseCurrencySymbol kr `
     -BaseCurrencyPrecision 2 `
-    -OrganizationCollation Latin1_General_CI_AI `
+    -OrganizationCollation Finnish_Swedish_CI_AS `
     -ReportingUrl http://$dbHostName/ReportServer_SPIntra01 `
     -InstallAccount $CRMInstallAccountCredential

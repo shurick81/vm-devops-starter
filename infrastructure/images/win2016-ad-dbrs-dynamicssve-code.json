@@ -99,15 +99,26 @@
         { "type": "powershell", "script": "PackageManagementProviderResource.ps1" },
         { "type": "powershell", "script": "basepsmodules.ps1" },
         { "type": "powershell", "script": "domainclientpsmodules.ps1" },
+        { "type": "powershell", "script": "adpsmodules.ps1" },
         { "type": "powershell", "script": "sqlpsmodules.ps1" },
         { "type": "powershell", "script": "dynamicspsmodules.ps1" },
         { "type": "powershell", "script": "devpsmodules.ps1" },
         { "type": "powershell", "script": "nodefender.ps1" },
         { "type": "windows-restart" },
+        { "type": "powershell", "script": "adbin.ps1" },
         { "type": "powershell", "script": "sql2016media.ps1" },
-        { "type": "powershell", "script": "sql2016binsve.ps1" },
+        { "type": "powershell", "script": "sql2016bin.ps1" },
         { "type": "powershell", "script": "sqlbin-rs.ps1" },
+        {
+            "type": "powershell",
+            "script": "sql2016mediaclean.ps1",
+            "environment_vars": [
+                "SPDEVOPSSTARTER_NODSCTEST=TRUE"
+            ]
+        },
         { "type": "powershell", "inline": "Save-Dynamics365Resource -Resource Dynamics365Server90RTMEnu -TargetDirectory c:/Install/Dynamics/Dynamics365Server90RTMEnu;" },
+        { "type": "powershell", "inline": "Save-Dynamics365Resource -Resource Dynamics365Server90RTMSve -TargetDirectory c:/Install/Dynamics/Dynamics365Server90RTMSve;" },
+        { "type": "powershell", "inline": "Save-Dynamics365Resource -Resource Dynamics365Server90LanguagePackSve -TargetDirectory c:/Install/Dynamics/Dynamics365Server90LanguagePackSve;" },
         { "type": "powershell", "inline": "Install-Dynamics365Prerequisites;" },
         { "type": "powershell", "script": "devmedia.ps1" },
         { "type": "powershell", "script": "devbin-1.ps1" },
@@ -129,7 +140,7 @@
         }
     ],
     "variables": {
-        "box_name": "win2016-dbrssve-dynamicssve-code",
+        "box_name": "win2016-ad-dbrs-dynamicssve-code",
         "client_id": "{{env `ARM_CLIENT_ID`}}",
         "client_secret": "{{env `ARM_CLIENT_SECRET`}}",
         "subscription_id": "{{env `ARM_SUBSCRIPTION_ID`}}",

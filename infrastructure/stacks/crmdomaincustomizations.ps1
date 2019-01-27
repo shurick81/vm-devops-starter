@@ -8,6 +8,10 @@ try
             [Parameter(Mandatory=$true)]
             [ValidateNotNullorEmpty()]
             [PSCredential]
+            $SqlRSAccountCredential,
+            [Parameter(Mandatory=$true)]
+            [ValidateNotNullorEmpty()]
+            [PSCredential]
             $CRMInstallAccountCredential,
             [Parameter(Mandatory=$true)]
             [ValidateNotNullorEmpty()]
@@ -42,6 +46,14 @@ try
         Node $AllNodes.NodeName
         {
 
+            xADUser SqlRSAccountCredentialUser
+            {
+                DomainName              = $domainName
+                UserName                = $SqlRSAccountCredential.GetNetworkCredential().UserName
+                Password                = $SqlRSAccountCredential
+                PasswordNeverExpires    = $true
+            }
+            
             xADUser CRMInstallAccountUser
             {
                 DomainName              = $domainName
@@ -148,9 +160,10 @@ try
 
             xADGroup CRMPrivReportingGroup
             {
-                GroupName   = "CRM01PrivReportingGroup"
-                GroupScope  = "Universal"
-                Path        = 'OU=CRM groups,DC=contoso,DC=local'
+                GroupName           = "CRM01PrivReportingGroup"
+                MembersToInclude    = $SqlRSAccountCredential.GetNetworkCredential().UserName
+                GroupScope          = "Universal"
+                Path                = 'OU=CRM groups,DC=contoso,DC=local'
             }
 
 #            xADGroup EnterpriseAdminGroup
@@ -173,6 +186,7 @@ $configurationData = @{ AllNodes = @(
 ) }
 
 $securedPassword = ConvertTo-SecureString "c0mp1Expa~~" -AsPlainText -Force
+$SqlRSAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_ssrs", $securedPassword );
 $CRMInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmadmin", $securedPassword );
 $CRMServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmsrv", $securedPassword );
 $DeploymentServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmdplsrv", $securedPassword );
@@ -185,6 +199,7 @@ try
 {
     &$configName `
         -ConfigurationData $configurationData `
+        -SqlRSAccountCredential $SqlRSAccountCredential `
         -CRMInstallAccountCredential $CRMInstallAccountCredential `
         -CRMServiceAccountCredential $CRMServiceAccountCredential `
         -DeploymentServiceAccountCredential $DeploymentServiceAccountCredential `

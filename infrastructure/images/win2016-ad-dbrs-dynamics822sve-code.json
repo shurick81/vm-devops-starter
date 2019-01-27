@@ -109,7 +109,17 @@
         { "type": "powershell", "script": "sql2016media.ps1" },
         { "type": "powershell", "script": "sql2016bin.ps1" },
         { "type": "powershell", "script": "sqlbin-rs.ps1" },
+        {
+            "type": "powershell",
+            "script": "sql2016mediaclean.ps1",
+            "environment_vars": [
+                "SPDEVOPSSTARTER_NODSCTEST=TRUE"
+            ]
+        },
+        { "type": "powershell", "inline": "Save-Dynamics365Resource -Resource CRM2016RTMEnu -TargetDirectory c:/Install/Dynamics/CRM2016RTMEnu;" },
         { "type": "powershell", "inline": "Save-Dynamics365Resource -Resource CRM2016RTMSve -TargetDirectory c:/Install/Dynamics/CRM2016RTMSve;" },
+        { "type": "powershell", "inline": "Save-Dynamics365Resource -Resource CRM2016LanguagePackSve -TargetDirectory c:/Install/Dynamics/CRM2016LanguagePackSve;" },
+        { "type": "powershell", "inline": "Save-Dynamics365Resource -Resource CRM2016ServicePack2Update02Enu -TargetDirectory c:/Install/Dynamics/CRM2016ServicePack2Update02Enu;" },
         { "type": "powershell", "inline": "Save-Dynamics365Resource -Resource CRM2016ServicePack2Update02Sve -TargetDirectory c:/Install/Dynamics/CRM2016ServicePack2Update02Sve;" },
         { "type": "powershell", "inline": "Install-Dynamics365Prerequisites;" },
         { "type": "powershell", "script": "devmedia.ps1" },

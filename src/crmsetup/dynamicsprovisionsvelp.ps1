@@ -31,8 +31,47 @@ Install-Dynamics365Server `
     -OrganizationUniqueName Contoso `
     -BaseISOCurrencyCode USD `
     -BaseCurrencyName "US Dollar" `
-    -BaseCurrencySymbol  `$
+    -BaseCurrencySymbol  `$ `
     -BaseCurrencyPrecision 2 `
     -OrganizationCollation Latin1_General_CI_AI `
     -ReportingUrl http://$dbHostName/ReportServer_SPIntra01 `
     -InstallAccount $CRMInstallAccountCredential
+Invoke-Command "$dbHostName.contoso.local" -Credential $CRMInstallAccountCredential -Authentication CredSSP {
+    param( $dynHostName )
+    if ( $dynHostName -eq $env:COMPUTERNAME )
+    {
+        Install-Dynamics365ReportingExtensions `
+            -MediaDir c:\Install\Dynamics\Dynamics365Server90RTMEnu\SrsDataConnector `
+            -InstanceName SPIntra01
+    }
+} -ArgumentList $env:COMPUTERNAME
+Install-Dynamics365Language -MediaDir C:\Install\Dynamics\Dynamics365Server90LanguagePackSve
+Add-PSSnapin Microsoft.Crm.PowerShell -ErrorAction Ignore;
+if ( Get-PSSnapin Microsoft.Crm.PowerShell -ErrorAction Ignore ) {
+    $importJobId = New-CrmOrganization `
+        -Name ORGLANG1053 `
+        -BaseLanguageCode 1053 `
+        -Credential $CRMInstallAccountCredential `
+        -DwsServerUrl "http://$env:COMPUTERNAME`:5555/XrmDeployment/2011/deployment.svc" `
+        -DisplayName "Organization for testing 1053 language" `
+        -SqlServerName $env:COMPUTERNAME\SPIntra01 `
+        -BaseCurrencyCode SEK `
+        -BaseCurrencyName "Svensk krona" `
+        -BaseCurrencySymbol kr `
+        -BaseCurrencyPrecision 2 `
+        -SrsUrl http://$env:COMPUTERNAME/ReportServer_SPIntra01;
+    do {
+        Sleep 60;
+        $operationStatus = Get-CrmOperationStatus -OperationId $importJobId -Credential $CRMInstallAccountCredential -DwsServerUrl "http://$env:COMPUTERNAME`:5555/XrmDeployment/2011/deployment.svc";
+        Write-Host "$(Get-Date) operationStatus.State is $($operationStatus.State)";
+    } while ( ( $operationStatus.State -ne "Completed" ) -and ( $operationStatus.State -ne "Failed" ) )
+    if ( $operationStatus.State -eq "Completed" ) {
+        Write-Host "Test OK";
+    } else {
+        Write-Host "Organization was not created properly";
+        Exit 1;
+    }
+} else {
+    "Could not load Microsoft.Crm.PowerShell PSSnapin";
+    Exit 1;
+}

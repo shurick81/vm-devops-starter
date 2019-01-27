@@ -20,7 +20,7 @@ Vagrant.configure(2) do |config|
             azure.client_id = ENV['ARM_CLIENT_ID']
             azure.client_secret = ENV['ARM_CLIENT_SECRET']
             azure.subscription_id = ENV['ARM_SUBSCRIPTION_ID']
-            azure.resource_group_name = 'dev-ad-dbrsdynamicscode'
+            azure.resource_group_name = 'dev-ad-dbrsdynamicssvecode'
             azure.vm_managed_image_id = "/subscriptions/#{ENV['ARM_SUBSCRIPTION_ID']}/resourceGroups/CommonRG/providers/Microsoft.Compute/images/win2016-ad"
             azure.instance_ready_timeout = 3600
             azure.vm_name = 'ad01'
@@ -30,7 +30,7 @@ Vagrant.configure(2) do |config|
             azure.admin_username = "vagrant"
             azure.admin_password = "Fractalsol365"
             azure.dns_name = (0...15).map { (97 + rand(26)).chr }.join
-            azure.nsg_name = 'dev-ad-dbrsdynamicscode'
+            azure.nsg_name = 'dev-ad-dbrsdynamicssvecode'
             azure.wait_for_destroy = true
             override.vm.guest = :windows
             override.vm.box = "azure"
@@ -49,7 +49,7 @@ Vagrant.configure(2) do |config|
     end
     config.vm.define "DBDYN01" do |vm_config|
         vm_config.vm.hostname = "DBDYN01"
-        vm_config.vm.box = "win2016-dbrs-dynamics-code"
+        vm_config.vm.box = "win2016-ad-dbrs-dynamicssve-code"
         vm_config.vm.network "forwarded_port", guest: 3389, host: 13391, auto_correct: true
         vm_config.vm.provider "virtualbox" do |vb, override|
             override.vm.network :private_network, ip: "192.168.51.129", gateway: "192.168.51.1"
@@ -67,7 +67,7 @@ Vagrant.configure(2) do |config|
             azure.client_id = ENV['ARM_CLIENT_ID']
             azure.client_secret = ENV['ARM_CLIENT_SECRET']
             azure.subscription_id = ENV['ARM_SUBSCRIPTION_ID']
-            azure.resource_group_name = 'dev-ad-dbrsdynamicscode'
+            azure.resource_group_name = 'dev-ad-dbrsdynamicssvecode'
             azure.vm_managed_image_id = "/subscriptions/#{ENV['ARM_SUBSCRIPTION_ID']}/resourceGroups/CommonRG/providers/Microsoft.Compute/images/win2016-dbrs-dynamics-code"
             azure.instance_ready_timeout = 3600
             azure.vm_name = 'dbdyn01'
@@ -76,8 +76,8 @@ Vagrant.configure(2) do |config|
             azure.admin_username = "vagrant"
             azure.admin_password = "Fractalsol365"
             azure.dns_name = (0...15).map { (97 + rand(26)).chr }.join
-            # azure.virtual_network_name = 'dev-ad-dbrsdynamicscode'
-            azure.nsg_name = 'dev-ad-dbrsdynamicscode'
+            # azure.virtual_network_name = 'dev-ad-dbrsdynamicssvecode'
+            azure.nsg_name = 'dev-ad-dbrsdynamicssvecode'
             azure.wait_for_destroy = true
             override.vm.guest = :windows
             override.vm.box = "azure"
@@ -100,7 +100,10 @@ Vagrant.configure(2) do |config|
         vm_config.vm.provision :shell, path: "../crmsslselfsignedcert.ps1"
         vm_config.vm.provision :shell, path: "../../../src/sqlprovision/rsconfig.ps1"
         vm_config.vm.provision :shell, path: "../../../src/sqlprovision/rsserviceaccountupdate.ps1"
-        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovision.ps1"
+
+#        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovision.ps1"
+        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovisionsve.ps1"
+#        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovisionsvelp.ps1"
 
         vm_config.vm.provision :file, source: "../../../src/crmsetup/dynamics_customizations-1.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/dynamics_customizations-1.ps1"
         vm_config.vm.provision :file, source: "../../../src/crmsetup/dynamics_customizations-1invoker.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/dynamics_customizations-1invoker.ps1"

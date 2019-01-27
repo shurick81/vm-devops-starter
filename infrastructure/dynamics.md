@@ -34,9 +34,15 @@ choco install -y virtualbox
 
 ## Creating
 
-PowerShell
-`cd` to `images` directory and run `.\preparevmimages.ps1 win2016-ad-dbrs-dynamics-code`
-`cd` to `stacks/dev-addbrsdynamicscode` directory.
+PowerShell:
+`cd` to `images` directory and run `.\preparevmimages.ps1 win2016-ad-dbrs-dynamicssve-code`
+
+In `stacks/dev-addbrsdynamicssvecode/vagrantfile`, uncomment one provisioning depending on what Dynamics configuration you need to be provisioned:
+- dynamicsprovision.ps1 - Installing English Dynamics and provisioning English organization
+- dynamicsprovisionsve.ps1 - Installing Swedish Dynamics and provisioning Swedish organization
+- dynamicsprovisionsvelp.ps1 - Installing English Dynamics, provisioning English organization, Installing Reporting Extensions, Installing Swedish language pack, provisioning Swedish organization
+
+`cd` to `stacks/dev-addbrsdynamicssvecode` directory.
 
 If PowerShell scripts are allowed on the machine, run `..\localdeploy.ps1`. Otherwise run `vagrant up`.
 
@@ -55,7 +61,7 @@ vagrant up
 
 ## Cleaning up
 
-`cd` to `stacks/dev-addbrsdynamicscode` directory and run `vagrant destroy --force`
+`cd` to `stacks/dev-addbrsdynamicssvecode` directory and run `vagrant destroy --force`
 `cd` to `images` directory and run `removevmimages.ps1 win2016-ad-dbrs-dynamics-code`
 
 Consider also removing downloaded ISO files:
@@ -68,7 +74,13 @@ Consider also removing downloaded ISO files:
 
 PowerShell
 `cd` to `images` directory and run `.\preparevmimages.ps1 win2016-ad, win2016-dbrs-dynamics-code`
-`cd` to `stacks/dev-ad-dbrsdynamicscode` directory.
+
+In `stacks/dev-addbrsdynamicssvecode/vagrantfile`, uncomment one provisioning depending on what Dynamics configuration you need to be provisioned:
+- dynamicsprovision.ps1 - Installing English Dynamics and provisioning English organization
+- dynamicsprovisionsve.ps1 - Installing Swedish Dynamics and provisioning Swedish organization
+- dynamicsprovisionsvelp.ps1 - Installing English Dynamics, provisioning English organization, Installing Reporting Extensions, Installing Swedish language pack, provisioning Swedish organization
+
+`cd` to `stacks/dev-ad-dbrsdynamicssvecode` directory.
 
 If PowerShell scripts are allowed on the machine, run `..\localdeploy.ps1`. Otherwise run `vagrant up`.
 
@@ -86,7 +98,7 @@ vagrant up
 ```
 
 ## Cleaning up
-`cd` to `stacks/dev-ad-dbrsdynamicscode` directory and run `vagrant destroy --force`
+`cd` to `stacks/dev-ad-dbrsdynamicssvecode` directory and run `vagrant destroy --force`
 `cd` to `images` directory and run `removevmimages.ps1 win2016-ad, win2016-dbrs-dynamics-code`
 
 Consider also removing downloaded ISO files:
