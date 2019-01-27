@@ -31,7 +31,7 @@ Install-Dynamics365Server `
     -OrganizationUniqueName Contoso `
     -BaseISOCurrencyCode USD `
     -BaseCurrencyName "US Dollar" `
-    -BaseCurrencySymbol  `$
+    -BaseCurrencySymbol `$ `
     -BaseCurrencyPrecision 2 `
     -OrganizationCollation Latin1_General_CI_AI `
     -ReportingUrl http://$dbHostName/ReportServer_SPIntra01 `
