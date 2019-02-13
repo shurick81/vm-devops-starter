@@ -13,7 +13,7 @@ Run in PowerShell:
 Set-ExecutionPolicy Bypass -Force;
 iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 choco install -y packer
-choco install -y vagrant --version 2.2.0
+choco install -y vagrant --version 2.2.3
 ```
 Then reboot for finishing insalling Vagrant and continue with the following snippet:
 ```PowerShell
