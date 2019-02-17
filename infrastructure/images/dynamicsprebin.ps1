@@ -45,7 +45,7 @@ try
             if ( $env:SPDEVOPSSTARTER_LOCALSOURCE -eq 1 )
             {
 
-                WindowsFeatureSet SPFeatures
+                WindowsFeatureSet DynamicsWindowsFeatures
                 {
                     Name                    = $featureResourceNames
                     Ensure                  = 'Present'
@@ -55,7 +55,7 @@ try
 
             } else {
 
-                WindowsFeatureSet SPFeatures
+                WindowsFeatureSet DynamicsWindowsFeatures
                 {
                     Name                    = $featureResourceNames
                     Ensure                  = 'Present'

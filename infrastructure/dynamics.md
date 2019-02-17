@@ -41,6 +41,9 @@ In `stacks/dev-addbrsdynamicssvecode/vagrantfile`, uncomment one provisioning de
 - dynamicsprovision.ps1 - Installing English Dynamics and provisioning English organization
 - dynamicsprovisionsve.ps1 - Installing Swedish Dynamics and provisioning Swedish organization
 - dynamicsprovisionsvelp.ps1 - Installing English Dynamics, provisioning English organization, Installing Reporting Extensions, Installing Swedish language pack, provisioning Swedish organization
+- dynamicsprovision8.ps1 - Installing English Dynamics 8.2.3 and provisioning English organization
+- dynamicsprovisionsve8.ps1 - Installing Swedish Dynamics 8.2.3 and provisioning Swedish organization
+- dynamicsprovisionsvelp8.ps1 - Installing English Dynamics 8.2.3, provisioning English organization, Installing Reporting Extensions, Installing Swedish language pack, provisioning Swedish organization
 
 `cd` to `stacks/dev-addbrsdynamicssvecode` directory.
 
@@ -73,12 +76,15 @@ Consider also removing downloaded ISO files:
 ## Creating
 
 PowerShell
-`cd` to `images` directory and run `.\preparevmimages.ps1 win2016-ad, win2016-dbrs-dynamics-code`
+`cd` to `images` directory and run `.\preparevmimages.ps1 win2016-ad, win2016-ad-dbrs-dynamicssve-code`
 
-In `stacks/dev-addbrsdynamicssvecode/vagrantfile`, uncomment one provisioning depending on what Dynamics configuration you need to be provisioned:
+In `stacks/dev-ad-dbrsdynamicssvecode/vagrantfile`, uncomment one provisioning depending on what Dynamics configuration you need to be provisioned:
 - dynamicsprovision.ps1 - Installing English Dynamics and provisioning English organization
 - dynamicsprovisionsve.ps1 - Installing Swedish Dynamics and provisioning Swedish organization
 - dynamicsprovisionsvelp.ps1 - Installing English Dynamics, provisioning English organization, Installing Reporting Extensions, Installing Swedish language pack, provisioning Swedish organization
+- dynamicsprovision8.ps1 - Installing English Dynamics 8.2.3 and provisioning English organization
+- dynamicsprovisionsve8.ps1 - Installing Swedish Dynamics 8.2.3 and provisioning Swedish organization
+- dynamicsprovisionsvelp8.ps1 - Installing English Dynamics 8.2.3, provisioning English organization, Installing Reporting Extensions, Installing Swedish language pack, provisioning Swedish organization
 
 `cd` to `stacks/dev-ad-dbrsdynamicssvecode` directory.
 
