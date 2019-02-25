@@ -8,7 +8,7 @@ try
         Write-Host "Model is VirtualBox";
         $provider = "virtualbox";
     }
-    if ( $computerSystem.Manufacturer -eq "Microsoft" ) {
+    if ( ( $computerSystem.Manufacturer -eq "Microsoft" ) -or ( $computerSystem.Manufacturer -eq "Microsoft Corporation" ) ) {
         Write-Host "Manufacturer is Microsoft";
         $provider = "hyperv";
         Get-DnsClient | % { if ( $_.ConnectionSpecificSuffix -like "*.cloudapp.net" ) {
