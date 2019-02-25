@@ -10,7 +10,6 @@ $MonitoringServiceAccountCredential = New-Object System.Management.Automation.PS
 Install-Dynamics365Server `
     -MediaDir c:\Install\Dynamics\Dynamics365Server90RTMEnu `
     -LicenseKey KKNV2-4YYK8-D8HWD-GDRMW-29YTW `
-    -InstallDir "c:\Program Files\Microsoft Dynamics CRM" `
     -CreateDatabase `
     -SqlServer $dbHostName\SPIntra01 `
     -PrivUserGroup "CN=CRM01PrivUserGroup,OU=CRM groups,DC=contoso,DC=local" `
@@ -29,11 +28,6 @@ Install-Dynamics365Server `
     -WebSiteUrl https://$env:COMPUTERNAME.contoso.local `
     -Organization "Contoso Ltd." `
     -OrganizationUniqueName Contoso `
-    -BaseISOCurrencyCode USD `
-    -BaseCurrencyName "US Dollar" `
-    -BaseCurrencySymbol `$ `
-    -BaseCurrencyPrecision 2 `
-    -OrganizationCollation Latin1_General_CI_AI `
     -ReportingUrl http://$dbHostName/ReportServer_SPIntra01 `
     -InstallAccount $CRMInstallAccountCredential
 Invoke-Command "$dbHostName.contoso.local" -Credential $CRMInstallAccountCredential -Authentication CredSSP {

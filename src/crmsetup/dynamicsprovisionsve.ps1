@@ -10,7 +10,6 @@ $MonitoringServiceAccountCredential = New-Object System.Management.Automation.PS
 Install-Dynamics365Server `
     -MediaDir c:\Install\Dynamics\Dynamics365Server90RTMSve `
     -LicenseKey KKNV2-4YYK8-D8HWD-GDRMW-29YTW `
-    -InstallDir "c:\Program Files\Microsoft Dynamics CRM" `
     -CreateDatabase `
     -SqlServer $dbHostName\SPIntra01 `
     -PrivUserGroup "CN=CRM01PrivUserGroup,OU=CRM groups,DC=contoso,DC=local" `
@@ -29,10 +28,5 @@ Install-Dynamics365Server `
     -WebSiteUrl https://$env:COMPUTERNAME.contoso.local `
     -Organization "Contoso Ltd." `
     -OrganizationUniqueName Contoso `
-    -BaseISOCurrencyCode SEK `
-    -BaseCurrencyName "Svensk krona" `
-    -BaseCurrencySymbol kr `
-    -BaseCurrencyPrecision 2 `
-    -OrganizationCollation Finnish_Swedish_CI_AS `
     -ReportingUrl http://$dbHostName/ReportServer_SPIntra01 `
     -InstallAccount $CRMInstallAccountCredential
