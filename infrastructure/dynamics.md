@@ -6,7 +6,7 @@
   * Vagrant
   * Vagrant reload
   * Packer
-  * Oracle VirtualBox
+  * Oracle VirtualBox or Hyper-V or Azure Subscription
 
 Run in PowerShell:
 ```PowerShell
