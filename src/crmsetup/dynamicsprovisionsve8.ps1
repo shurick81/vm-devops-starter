@@ -28,6 +28,9 @@ Install-Dynamics365Server `
     -WebSiteUrl https://$env:COMPUTERNAME.contoso.local `
     -Organization "Contoso Ltd." `
     -OrganizationUniqueName Contoso `
+    -BaseISOCurrencyCode SEK `
+    -BaseCurrencyName "Svensk krona" `
+    -BaseCurrencySymbol kr `
     -ReportingUrl http://$dbHostName/ReportServer_SPIntra01 `
     -InstallAccount $CRMInstallAccountCredential
 Install-Dynamics365Update -MediaDir C:\Install\Dynamics\CRM2016ServicePack2Update03Sve -InstallAccount $CRMInstallAccountCredential

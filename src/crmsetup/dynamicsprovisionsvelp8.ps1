@@ -52,7 +52,6 @@ if ( Get-PSSnapin Microsoft.Crm.PowerShell -ErrorAction Ignore ) {
         -BaseCurrencyCode SEK `
         -BaseCurrencyName "Svensk krona" `
         -BaseCurrencySymbol kr `
-        -BaseCurrencyPrecision 2 `
         -SrsUrl http://$env:COMPUTERNAME/ReportServer_SPIntra01;
     do {
         Sleep 60;
