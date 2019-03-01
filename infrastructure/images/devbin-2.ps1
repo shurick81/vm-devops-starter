@@ -24,6 +24,24 @@ try
                 DependsOn               = "[cChocoInstaller]ChocoInstalled"
             }
 
+            cChocoPackageInstaller ChromeInstalled
+            {
+                Name                    = "googlechrome"
+                DependsOn               = "[cChocoInstaller]ChocoInstalled"
+            }
+
+            cChocoPackageInstaller NotepadplusplusInstalled
+            {
+                Name                    = "notepadplusplus"
+                DependsOn               = "[cChocoInstaller]ChocoInstalled"
+            }
+
+            cChocoPackageInstaller fiddlerInstalled
+            {
+                Name                    = "fiddler"
+                DependsOn               = "[cChocoInstaller]ChocoInstalled"
+            }
+            
             cChocoPackageInstaller GitInstalled
             {
                 Name                    = "git"
