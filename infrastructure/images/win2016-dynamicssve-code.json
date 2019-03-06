@@ -122,7 +122,7 @@
         { "type": "powershell", "inline": "Save-Dynamics365Resource -Resource CRM2016ServicePack2Update02Sve -TargetDirectory c:/Install/Dynamics/CRM2016ServicePack2Update02Sve;" },
         { "type": "powershell", "inline": "Save-Dynamics365Resource -Resource CRM2016ServicePack2Update03Enu -TargetDirectory c:/Install/Dynamics/CRM2016ServicePack2Update03Enu;" },
         { "type": "powershell", "inline": "Save-Dynamics365Resource -Resource CRM2016ServicePack2Update03Sve -TargetDirectory c:/Install/Dynamics/CRM2016ServicePack2Update03Sve;" },
-        { "type": "powershell", "inline": "Install-Dynamics365Prerequisites;" },
+        { "type": "powershell", "inline": "Install-Dynamics365Prerequisite;" },
         { "type": "powershell", "script": "devmedia.ps1" },
         { "type": "powershell", "script": "devbin-1.ps1" },
         { "type": "windows-restart" },
