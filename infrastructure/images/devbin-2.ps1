@@ -47,6 +47,24 @@ try
                 Name                    = "git"
                 DependsOn               = "[cChocoInstaller]ChocoInstalled"
             }
+            
+            cChocoPackageInstaller soapuiInstalled
+            {
+                Name                    = "soapui"
+                DependsOn               = "[cChocoInstaller]ChocoInstalled"
+            }
+
+            cChocoPackageInstaller nodejsInstalled
+            {
+                Name                    = "nodejs"
+                DependsOn               = "[cChocoInstaller]ChocoInstalled"
+            }
+
+            cChocoPackageInstaller office365businessInstalled
+            {
+                Name                    = "office365business"
+                DependsOn               = "[cChocoInstaller]ChocoInstalled"
+            }
 
             WindowsFeatureSet DomainFeatures
             {
