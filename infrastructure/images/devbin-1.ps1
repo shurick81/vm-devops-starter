@@ -25,7 +25,7 @@ try
                 Script VSInstallerRunning
                 {
                     SetScript = {
-                        Start-Process -FilePath C:\Install\VSInstall\vs_enterprise.exe -ArgumentList '--quiet --wait --add Microsoft.VisualStudio.Workload.Office --includeRecommended' -Wait;
+                        Start-Process -FilePath C:\Install\VSInstall\vs_professional.exe -ArgumentList '--quiet --wait --add Microsoft.VisualStudio.Workload.Office --includeRecommended' -Wait;
                     }
                     TestScript = {
                         $products = Get-WmiObject -Class Win32_Product | ? { $_.Name -eq "Microsoft Visual Studio Setup Configuration" }
@@ -49,7 +49,7 @@ try
                 Script VSInstallerRunning
                 {
                     SetScript = {
-                        Start-Process -FilePath C:\Install\VSInstall\vs_enterprise.exe -ArgumentList '--quiet --wait --add Microsoft.VisualStudio.Workload.Office --includeRecommended' -Wait; 
+                        Start-Process -FilePath C:\Install\VSInstall\vs_professional.exe -ArgumentList '--quiet --wait --add Microsoft.VisualStudio.Workload.Office --includeRecommended' -Wait; 
                     }
                     TestScript = {
                         $products = Get-WmiObject -Class Win32_Product | ? { $_.Name -eq "Microsoft Visual Studio Setup Configuration" }

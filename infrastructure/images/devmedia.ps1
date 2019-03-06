@@ -35,8 +35,8 @@ try
 
                 xRemoteFile VSMediaBootstrapperDownloaded
                 {
-                    Uri             = "https://download.visualstudio.microsoft.com/download/pr/12221250/52257ee3e96d6e07313e41ad155b155a/vs_Enterprise.exe"
-                    DestinationPath = "C:\Install\VSInstall\vs_Enterprise.exe"
+                    Uri             = "https://download.visualstudio.microsoft.com/download/pr/366df54c-35a5-4d91-9614-fc0044349ed7/dc65bed6acbf3e2bd2d3c388c57b9987/vs_professional.exe"
+                    DestinationPath = "C:\Install\VSInstall\vs_professional.exe"
                     MatchSource     = $false
                 }
 
