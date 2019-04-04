@@ -7,6 +7,7 @@ $SandboxServiceAccountCredential = New-Object System.Management.Automation.PSCre
 $VSSWriterServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmvsswrit", $securedPassword );
 $AsyncServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmasync", $securedPassword );
 $MonitoringServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmmon", $securedPassword );
+$domainName = (Get-WmiObject Win32_ComputerSystem).Domain;
 Install-Dynamics365Server `
     -MediaDir c:\Install\Dynamics\CRM2016RTMSve `
     -LicenseKey WCPQN-33442-VH2RQ-M4RKF-GXYH4 `
@@ -33,4 +34,6 @@ Install-Dynamics365Server `
     -BaseCurrencySymbol kr `
     -ReportingUrl http://$dbHostName/ReportServer_SPIntra01 `
     -InstallAccount $CRMInstallAccountCredential
-Install-Dynamics365Update -MediaDir C:\Install\Dynamics\CRM2016ServicePack2Update03Sve -InstallAccount $CRMInstallAccountCredential
+Invoke-Command "$env:COMPUTERNAME.$domainName" -Credential $CRMInstallAccountCredential -Authentication CredSSP {
+    Install-Dynamics365Update -MediaDir C:\Install\Dynamics\CRM2016ServicePack2Update03Enu
+}
