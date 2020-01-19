@@ -47,14 +47,14 @@ try
             $SPSecondTestAccountCredential
         )
         Import-DscResource -ModuleName PSDesiredStateConfiguration
-        Import-DscResource -ModuleName xActiveDirectory -ModuleVersion 2.21.0.0
+        Import-DscResource -ModuleName ActiveDirectoryDsc -ModuleVersion 5.0.0
 
         $domainName = "contoso.local";
 
         Node $AllNodes.NodeName
         {
 
-            xADUser DomainAdminAccountUser
+            ADUser DomainAdminAccountUser
             {
                 DomainName              = $domainName
                 UserName                = $DomainAdminCredential.GetNetworkCredential().UserName
@@ -62,7 +62,7 @@ try
                 PasswordNeverExpires    = $true
             }
             
-            xADUser SQLServiceAccount
+            ADUser SQLServiceAccount
             {
                 DomainName              = $domainName
                 UserName                = $SQLServiceAccountCredential.GetNetworkCredential().UserName
@@ -70,7 +70,7 @@ try
                 PasswordNeverExpires    = $true
             }
 
-            xADUser SQLAgentAccount
+            ADUser SQLAgentAccount
             {
                 DomainName              = $domainName
                 UserName                = $SQLAgentAccountCredential.GetNetworkCredential().UserName
@@ -78,7 +78,7 @@ try
                 PasswordNeverExpires    = $true
             }
 
-            xADUser SPWebAppPoolAccountUser
+            ADUser SPWebAppPoolAccountUser
             {
                 DomainName              = $domainName
                 UserName                = $SPWebAppPoolAccountCredential.GetNetworkCredential().UserName
@@ -86,7 +86,7 @@ try
                 PasswordNeverExpires    = $true
             }
 
-            xADUser SPServicesAccountUser
+            ADUser SPServicesAccountUser
             {
                 DomainName              = $domainName
                 UserName                = $SPServicesAccountCredential.GetNetworkCredential().UserName
@@ -94,7 +94,7 @@ try
                 PasswordNeverExpires    = $true
             }
 
-            xADUser SPSearchServiceAccountUser
+            ADUser SPSearchServiceAccountUser
             {
                 DomainName              = $domainName
                 UserName                = $SPSearchServiceAccountCredential.GetNetworkCredential().UserName
@@ -102,7 +102,7 @@ try
                 PasswordNeverExpires    = $true
             }
 
-            xADUser SPCrawlerAccountUser
+            ADUser SPCrawlerAccountUser
             {
                 DomainName              = $domainName
                 UserName                = $SPCrawlerAccountCredential.GetNetworkCredential().UserName
@@ -110,7 +110,7 @@ try
                 PasswordNeverExpires    = $true
             }
 
-            xADUser SPOCSuperUserADUser
+            ADUser SPOCSuperUserADUser
             {
                 DomainName              = $domainName
                 UserName                = "_spocuser16"
@@ -118,7 +118,7 @@ try
                 PasswordNeverExpires    = $true
             }
 
-            xADUser SPOCSuperReaderUser
+            ADUser SPOCSuperReaderUser
             {
                 DomainName              = $domainName
                 UserName                = "_spocrdr16"
@@ -126,7 +126,7 @@ try
                 PasswordNeverExpires    = $true
             }
 
-            xADUser SPTestUser
+            ADUser SPTestUser
             {
                 DomainName              = $domainName
                 UserName                = $SPTestAccountCredential.GetNetworkCredential().UserName
@@ -134,7 +134,7 @@ try
                 PasswordNeverExpires    = $true
             }
 
-            xADUser SPSecondTestUser
+            ADUser SPSecondTestUser
             {
                 DomainName              = $domainName
                 UserName                = $SPSecondTestAccountCredential.GetNetworkCredential().UserName
@@ -142,18 +142,18 @@ try
                 PasswordNeverExpires    = $true
             }
             
-            xADGroup DomainAdminGroup
+            ADGroup DomainAdminGroup
             {
                 GroupName           = "Domain Admins"
                 MembersToInclude    = $DomainAdminCredential.GetNetworkCredential().UserName
-                DependsOn           = "[xADUser]DomainAdminAccountUser"
+                DependsOn           = "[ADUser]DomainAdminAccountUser"
             }
 
-            xADGroup EnterpriseAdminGroup
+            ADGroup EnterpriseAdminGroup
             {
                 GroupName           = "Enterprise Admins"
                 MembersToInclude    = $DomainAdminCredential.GetNetworkCredential().UserName
-                DependsOn           = "[xADUser]DomainAdminAccountUser"
+                DependsOn           = "[ADUser]DomainAdminAccountUser"
             }
 
         }

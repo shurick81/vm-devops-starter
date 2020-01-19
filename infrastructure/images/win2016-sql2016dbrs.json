@@ -39,8 +39,8 @@
             "headless": true,
             "http_directory": "http",
             "shutdown_command": "a:/sysprep.bat",
-            "ram_size": 4096,
-            "cpu": 4,
+            "memory": 4096,
+            "cpus": 4,
             "switch_name": "Default Switch",
             "communicator": "winrm",
             "winrm_username": "packer",
@@ -107,7 +107,7 @@
             "type": "powershell",
             "script": "sql2016mediaclean.ps1",
             "environment_vars": [
-                "SPDEVOPSSTARTER_NODSCTEST=TRUE"
+                "VMDEVOPSSTARTER_NODSCTEST=TRUE"
             ]
         },
         { "type": "powershell", "script": "xcredserver.ps1" },

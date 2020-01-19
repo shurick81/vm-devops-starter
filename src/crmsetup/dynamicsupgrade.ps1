@@ -6,7 +6,7 @@ if ( -not ( Get-PSSnapin -Name Microsoft.Crm.PowerShell -ErrorAction SilentlyCon
     $RemoveSnapInWhenDone = $True
 }
 Write-Host "$(Get-Date) Starting Import-CrmOrganization";
-$importJobId = Import-CrmOrganization -DatabaseName Contoso_MSCRM_Old -SqlServerName $env:COMPUTERNAME\SPIntra01 -SrsUrl http://$env:COMPUTERNAME/ReportServer_SPIntra01 -UserMappingMethod ByAccount -DisplayName "Contoso LTD imported" -Name "ContosoImported" -Credential $CRMInstallAccountCredential -DwsServerUrl "http://$env:COMPUTERNAME`:5555/XrmDeployment/2011/deployment.svc";
+$importJobId = Import-CrmOrganization -DatabaseName Contoso_MSCRM_Old -SqlServerName $env:COMPUTERNAME\SQLInstance01 -SrsUrl http://$env:COMPUTERNAME/ReportServer_SQLInstance01 -UserMappingMethod ByAccount -DisplayName "Contoso LTD imported" -Name "ContosoImported" -Credential $CRMInstallAccountCredential -DwsServerUrl "http://$env:COMPUTERNAME`:5555/XrmDeployment/2011/deployment.svc";
 $operationStatus = Get-CrmOperationStatus -OperationId $importJobId
 do {
     Write-Host "$(Get-Date) Waiting until CRM installation job is done";

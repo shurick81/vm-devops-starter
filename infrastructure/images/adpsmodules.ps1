@@ -13,13 +13,13 @@ try
         Node $AllNodes.NodeName
         {
 
-            PSModule "PSModule_xActiveDirectory"
+            PSModule "PSModule_ActiveDirectoryDsc"
             {
                 Ensure              = "Present"
-                Name                = "xActiveDirectory"
+                Name                = "ActiveDirectoryDsc"
                 Repository          = "PSGallery"
                 InstallationPolicy  = "Trusted"
-                RequiredVersion     = "2.21.0.0"
+                RequiredVersion     = "5.0.0"
             }
 
             PSModule "PSModule_xDnsServer"
@@ -66,7 +66,7 @@ catch
     $_.Exception.Message
     Exit 1;
 }
-if ( $env:SPDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
+if ( $env:VMDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
 {
     Write-Host "$(Get-Date) Testing DSC"
     try {

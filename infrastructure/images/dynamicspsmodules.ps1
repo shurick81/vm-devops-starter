@@ -55,7 +55,7 @@ try
                 Name                = "Dynamics365Configuration"
                 Repository          = "PSGallery"
                 InstallationPolicy  = "Trusted"
-                RequiredVersion     = "1.2"
+                RequiredVersion     = "1.4.2"
             }
 
         }
@@ -92,7 +92,7 @@ catch
     $_.Exception.Message
     Exit 1;
 }
-if ( $env:SPDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
+if ( $env:VMDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
 {
     Write-Host "$(Get-Date) Testing DSC"
     try {

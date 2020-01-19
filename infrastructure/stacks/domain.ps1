@@ -15,18 +15,18 @@ try
             $DomainSafeModeAdministratorPasswordCredential
         )
         Import-DscResource -ModuleName PSDesiredStateConfiguration
-        Import-DscResource -ModuleName xActiveDirectory -ModuleVersion 2.21.0.0
+        Import-DscResource -ModuleName ActiveDirectoryDsc -ModuleVersion 5.0.0
 
         $domainName = "contoso.local";
 
         Node $AllNodes.NodeName
         {
 
-            xADDomain ADDomain
+            ADDomain ADDomain
             {
                 DomainName                      = $domainName
                 SafemodeAdministratorPassword   = $domainSafeModeAdministratorPasswordCredential
-                DomainAdministratorCredential   = $shortDomainAdminCredential
+                Credential                      = $shortDomainAdminCredential
             }
 
         }
@@ -71,7 +71,7 @@ catch
     $_.Exception.Message
     Exit 1;
 }
-if ( $env:SPDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
+if ( $env:VMDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
 {
     Write-Host "$(Get-Date) Testing DSC"
     try {

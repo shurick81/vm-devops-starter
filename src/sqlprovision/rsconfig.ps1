@@ -61,9 +61,9 @@ try
 
             SqlRS ReportingServicesConfig
             {
-                InstanceName                 = 'SPIntra01'
+                InstanceName                 = 'SQLInstance01'
                 DatabaseServerName           = 'localhost'
-                DatabaseInstanceName         = 'SPIntra01'
+                DatabaseInstanceName         = 'SQLInstance01'
                 #ReportServerVirtualDirectory = 'MyReportServer'
                 ReportServerReservedUrl      = @( 'http://+:80' )
                 #ReportsVirtualDirectory      = 'MyReports'
@@ -138,7 +138,7 @@ catch
     $_.Exception.Message
     Exit 1;
 }
-if ( $env:SPDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
+if ( $env:VMDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
 {
     Write-Host "$(Get-Date) Testing DSC"
     try {

@@ -1,44 +1,52 @@
-$dbHostName = $env:COMPUTERNAME
+$domainName = (Get-WmiObject Win32_ComputerSystem).Domain;
 $securedPassword = ConvertTo-SecureString "c0mp1Expa~~" -AsPlainText -Force
 $CRMInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmadmin", $securedPassword );
-$CRMServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmsrv", $securedPassword );
-$DeploymentServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmdplsrv", $securedPassword );
-$SandboxServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmsandbox", $securedPassword );
-$VSSWriterServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmvsswrit", $securedPassword );
-$AsyncServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmasync", $securedPassword );
-$MonitoringServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmmon", $securedPassword );
-Install-Dynamics365Server `
-    -MediaDir c:\Install\Dynamics\Dynamics365Server90RTMEnu `
-    -LicenseKey KKNV2-4YYK8-D8HWD-GDRMW-29YTW `
-    -CreateDatabase `
-    -SqlServer $dbHostName\SPIntra01 `
-    -PrivUserGroup "CN=CRM01PrivUserGroup,OU=CRM groups,DC=contoso,DC=local" `
-    -SQLAccessGroup "CN=CRM01SQLAccessGroup,OU=CRM groups,DC=contoso,DC=local" `
-    -UserGroup "CN=CRM01UserGroup,OU=CRM groups,DC=contoso,DC=local" `
-    -ReportingGroup "CN=CRM01ReportingGroup,OU=CRM groups,DC=contoso,DC=local" `
-    -PrivReportingGroup "CN=CRM01PrivReportingGroup,OU=CRM groups,DC=contoso,DC=local" `
-    -CrmServiceAccount $CRMServiceAccountCredential `
-    -DeploymentServiceAccount $DeploymentServiceAccountCredential `
-    -SandboxServiceAccount $SandboxServiceAccountCredential `
-    -VSSWriterServiceAccount $VSSWriterServiceAccountCredential `
-    -AsyncServiceAccount $AsyncServiceAccountCredential `
-    -MonitoringServiceAccount $MonitoringServiceAccountCredential `
-    -CreateWebSite `
-    -WebSitePort 5555 `
-    -WebSiteUrl https://$env:COMPUTERNAME.contoso.local `
-    -Organization "Contoso Ltd." `
-    -OrganizationUniqueName Contoso `
-    -ReportingUrl http://$dbHostName/ReportServer_SPIntra01 `
-    -InstallAccount $CRMInstallAccountCredential
-Invoke-Command "$dbHostName.contoso.local" -Credential $CRMInstallAccountCredential -Authentication CredSSP {
-    param( $dynHostName )
-    if ( $dynHostName -eq $env:COMPUTERNAME )
-    {
+Invoke-Command "$env:COMPUTERNAME.$domainName" -Credential $CRMInstallAccountCredential -Authentication CredSSP {
+    $dbHostName = $env:COMPUTERNAME
+    $securedPassword = ConvertTo-SecureString "c0mp1Expa~~" -AsPlainText -Force
+    $CRMServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmsrv", $securedPassword );
+    $DeploymentServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmdplsrv", $securedPassword );
+    $SandboxServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmsandbox", $securedPassword );
+    $VSSWriterServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmvsswrit", $securedPassword );
+    $AsyncServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmasync", $securedPassword );
+    $MonitoringServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmmon", $securedPassword );
+    Install-Dynamics365Server `
+        -MediaDir c:\Install\Dynamics\Dynamics365Server90RTMEnu `
+        -LicenseKey KKNV2-4YYK8-D8HWD-GDRMW-29YTW `
+        -CreateDatabase `
+        -SqlServer $dbHostName\SQLInstance01 `
+        -PrivUserGroup "CN=CRM01PrivUserGroup,OU=CRM groups,DC=contoso,DC=local" `
+        -SQLAccessGroup "CN=CRM01SQLAccessGroup,OU=CRM groups,DC=contoso,DC=local" `
+        -UserGroup "CN=CRM01UserGroup,OU=CRM groups,DC=contoso,DC=local" `
+        -ReportingGroup "CN=CRM01ReportingGroup,OU=CRM groups,DC=contoso,DC=local" `
+        -PrivReportingGroup "CN=CRM01PrivReportingGroup,OU=CRM groups,DC=contoso,DC=local" `
+        -CrmServiceAccount $CRMServiceAccountCredential `
+        -DeploymentServiceAccount $DeploymentServiceAccountCredential `
+        -SandboxServiceAccount $SandboxServiceAccountCredential `
+        -VSSWriterServiceAccount $VSSWriterServiceAccountCredential `
+        -AsyncServiceAccount $AsyncServiceAccountCredential `
+        -MonitoringServiceAccount $MonitoringServiceAccountCredential `
+        -CreateWebSite `
+        -WebSitePort 5555 `
+        -WebSiteUrl https://$env:COMPUTERNAME.contoso.local `
+        -Organization "Contoso Ltd." `
+        -OrganizationUniqueName Contoso `
+        -ReportingUrl http://$dbHostName/ReportServer_SQLInstance01
+}
+if ( $dbHostName -eq $env:COMPUTERNAME ) {
+    Invoke-Command "$dbHostName.$domainName" -Credential $CRMInstallAccountCredential -Authentication CredSSP {
         Install-Dynamics365ReportingExtensions `
-            -MediaDir c:\Install\Dynamics\Dynamics365Server90RTMEnu\SrsDataConnector `
-            -InstanceName SPIntra01
+            -MediaDir C:\Install\Dynamics\Dynamics365Server90RTMEnu\SrsDataConnector `
+            -InstanceName SQLInstance01
     }
-} -ArgumentList $env:COMPUTERNAME
+} else {
+    Invoke-Command "$dbHostName.$domainName" -Credential $CRMInstallAccountCredential -Authentication CredSSP {
+        param( $fileShareHost )
+        Install-Dynamics365ReportingExtensions `
+            -MediaDir \\$fileShareHost\c$\Install\Dynamics\Dynamics365Server90RTMEnu\SrsDataConnector `
+            -InstanceName SQLInstance01
+    } -ArgumentList $env:COMPUTERNAME;
+}
 Install-Dynamics365Language -MediaDir C:\Install\Dynamics\Dynamics365Server90LanguagePackSve
 Add-PSSnapin Microsoft.Crm.PowerShell -ErrorAction Ignore;
 if ( Get-PSSnapin Microsoft.Crm.PowerShell -ErrorAction Ignore ) {
@@ -48,11 +56,11 @@ if ( Get-PSSnapin Microsoft.Crm.PowerShell -ErrorAction Ignore ) {
         -Credential $CRMInstallAccountCredential `
         -DwsServerUrl "http://$env:COMPUTERNAME`:5555/XrmDeployment/2011/deployment.svc" `
         -DisplayName "Organization for testing 1053 language" `
-        -SqlServerName $env:COMPUTERNAME\SPIntra01 `
+        -SqlServerName $env:COMPUTERNAME\SQLInstance01 `
         -BaseCurrencyCode SEK `
         -BaseCurrencyName "Svensk krona" `
         -BaseCurrencySymbol kr `
-        -SrsUrl http://$env:COMPUTERNAME/ReportServer_SPIntra01;
+        -SrsUrl http://$env:COMPUTERNAME/ReportServer_SQLInstance01;
     do {
         Sleep 60;
         $operationStatus = Get-CrmOperationStatus -OperationId $importJobId -Credential $CRMInstallAccountCredential -DwsServerUrl "http://$env:COMPUTERNAME`:5555/XrmDeployment/2011/deployment.svc";
@@ -68,3 +76,21 @@ if ( Get-PSSnapin Microsoft.Crm.PowerShell -ErrorAction Ignore ) {
     "Could not load Microsoft.Crm.PowerShell PSSnapin";
     Exit 1;
 }
+Invoke-Command "$env:COMPUTERNAME.$domainName" -Credential $CRMInstallAccountCredential -Authentication CredSSP {
+    Install-Dynamics365Update -MediaDir C:\Install\Dynamics\Dynamics365Server90Update09Enu
+}
+if ( $dbHostName -eq $env:COMPUTERNAME ) {
+    $mediaDir = "C:\Install\Dynamics\Dynamics365Server90ReportingExtensionsUpdate09Enu";
+} else {
+    $mediaDir = "\\$env:COMPUTERNAME\c$\Install\Dynamics\Dynamics365Server90ReportingExtensionsUpdate09Enu";
+}
+Write-Output "dbHostName is $dbHostName"
+Invoke-Command "$dbHostName.$domainName" -Credential $CRMInstallAccountCredential -Authentication CredSSP {
+    param( $mediaDir )
+    Import-Module C:\test-projects\Dynamics365Configuration\src\Dynamics365Configuration\Dynamics365Configuration.psd1
+    Write-Output "mediaDir is $mediaDir"
+    Install-Dynamics365ReportingExtensionsUpdate -MediaDir $mediaDir `
+        -LogFilePath c:\tmp\Dynamics365ServerInstallLog.txt `
+        -LogFilePullIntervalInSeconds 15 `
+        -LogFilePullToOutput
+} -ArgumentList $mediaDir;

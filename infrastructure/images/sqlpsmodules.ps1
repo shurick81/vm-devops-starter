@@ -28,7 +28,7 @@ try
                 Name                = "StorageDsc"
                 Repository          = "PSGallery"
                 InstallationPolicy  = "Trusted"
-                RequiredVersion     = "4.0.0.0"
+                RequiredVersion     = "4.9.0.0"
             }
     
             PSModule "PSModule_xNetworking"
@@ -92,7 +92,7 @@ catch
     $_.Exception.Message
     Exit 1;
 }
-if ( $env:SPDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
+if ( $env:VMDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
 {
     Write-Host "$(Get-Date) Testing DSC"
     try {

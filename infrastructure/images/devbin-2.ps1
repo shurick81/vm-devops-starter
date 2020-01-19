@@ -36,7 +36,7 @@ try
                 DependsOn               = "[cChocoInstaller]ChocoInstalled"
             }
 
-            cChocoPackageInstaller fiddlerInstalled
+            cChocoPackageInstaller SiddlerInstalled
             {
                 Name                    = "fiddler"
                 DependsOn               = "[cChocoInstaller]ChocoInstalled"
@@ -48,19 +48,20 @@ try
                 DependsOn               = "[cChocoInstaller]ChocoInstalled"
             }
             
-            cChocoPackageInstaller soapuiInstalled
+            cChocoPackageInstaller SoapuiInstalled
             {
                 Name                    = "soapui"
                 DependsOn               = "[cChocoInstaller]ChocoInstalled"
             }
 
-            cChocoPackageInstaller nodejsInstalled
+            cChocoPackageInstaller NodejsInstalled
             {
                 Name                    = "nodejs"
+                Version                 = "10.16.3"
                 DependsOn               = "[cChocoInstaller]ChocoInstalled"
             }
 
-            cChocoPackageInstaller office365businessInstalled
+            cChocoPackageInstaller Office365businessInstalled
             {
                 Name                    = "office365business"
                 DependsOn               = "[cChocoInstaller]ChocoInstalled"
@@ -107,7 +108,7 @@ catch
     $_.Exception.Message
     Exit 1;
 }
-if ( $env:SPDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
+if ( $env:VMDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
 {
     Write-Host "$(Get-Date) Testing DSC"
     try {

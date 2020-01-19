@@ -7,20 +7,20 @@ try
         param(
         )
         Import-DscResource -ModuleName PSDesiredStateConfiguration
-        Import-DscResource -ModuleName xActiveDirectory -ModuleVersion 2.21.0.0
+        Import-DscResource -ModuleName ActiveDirectoryDsc -ModuleVersion 5.0.0
 
         $domainName = "contoso.local";
 
         Node $AllNodes.NodeName
         {
 
-            xADGroup AdminGroup
+            ADGroup AdminGroup
             {
                 GroupName           = "Administrators"
                 MembersToInclude    = "CRM01PrivUserGroup", "_ssrs"
             }
 
-            xADGroup PerformanceUserGroup
+            ADGroup PerformanceUserGroup
             {
                 GroupName           = "Performance Log Users"
                 MembersToInclude    = "_crmasync", "_crmsrv"
@@ -88,7 +88,7 @@ catch
     $_.Exception.Message
     Exit 1;
 }
-if ( $env:SPDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
+if ( $env:VMDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
 {
     Write-Host "$(Get-Date) Testing DSC"
     try {

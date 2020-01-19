@@ -27,7 +27,7 @@ Vagrant.configure(2) do |config|
             azure.client_id = ENV['ARM_CLIENT_ID']
             azure.client_secret = ENV['ARM_CLIENT_SECRET']
             azure.subscription_id = ENV['ARM_SUBSCRIPTION_ID']
-            azure.resource_group_name = 'dev-ad-dbrsdynamicscode'
+            azure.resource_group_name = 'dev-ad-dbrsdynamicssvecode-dbsp2013code'
             azure.vm_managed_image_id = "/subscriptions/#{ENV['ARM_SUBSCRIPTION_ID']}/resourceGroups/CommonRG/providers/Microsoft.Compute/images/win2016-ad"
             azure.instance_ready_timeout = 3600
             azure.vm_name = 'ad01'
@@ -37,7 +37,7 @@ Vagrant.configure(2) do |config|
             azure.admin_username = "vagrant"
             azure.admin_password = "Fractalsol365"
             azure.dns_name = (0...15).map { (97 + rand(26)).chr }.join
-            azure.nsg_name = 'dev-ad-dbrsdynamicscode'
+            azure.nsg_name = 'dev-ad-dbrsdynamicssvecode-dbsp2013code'
             azure.wait_for_destroy = true
             override.vm.guest = :windows
             override.vm.box = "azure"
@@ -53,11 +53,13 @@ Vagrant.configure(2) do |config|
         vm_config.vm.provision :shell, path: "../domain.ps1"
         vm_config.vm.provision :shell, inline: "powershell -command 'Start-Sleep 60'"
         vm_config.vm.provision :shell, path: "../crmdomaincustomizations.ps1"
+        vm_config.vm.provision :shell, path: "../spdomaincustomizations.ps1"
+        vm_config.vm.provision :shell, path: "../customizations/spdomaincustomizations.ps1"
         vm_config.vm.boot_timeout = 600
     end
     config.vm.define "DBDYN01" do |vm_config|
         vm_config.vm.hostname = "DBDYN01"
-        vm_config.vm.box = "win2016-dbrs-dynamics-code"
+        vm_config.vm.box = "win2016-dbrs-dynamicssve-code"
         vm_config.vm.network "forwarded_port", guest: 3389, host: 13391, auto_correct: true
         vm_config.vm.provider "virtualbox" do |vb, override|
             override.vm.network :private_network, ip: "192.168.51.129", gateway: "192.168.51.1"
@@ -77,8 +79,8 @@ Vagrant.configure(2) do |config|
             azure.client_id = ENV['ARM_CLIENT_ID']
             azure.client_secret = ENV['ARM_CLIENT_SECRET']
             azure.subscription_id = ENV['ARM_SUBSCRIPTION_ID']
-            azure.resource_group_name = 'dev-ad-dbrsdynamicscode'
-            azure.vm_managed_image_id = "/subscriptions/#{ENV['ARM_SUBSCRIPTION_ID']}/resourceGroups/CommonRG/providers/Microsoft.Compute/images/win2016-dbrs-dynamics-code"
+            azure.resource_group_name = 'dev-ad-dbrsdynamicssvecode-dbsp2013code-dbsp2013code'
+            azure.vm_managed_image_id = "/subscriptions/#{ENV['ARM_SUBSCRIPTION_ID']}/resourceGroups/CommonRG/providers/Microsoft.Compute/images/win2016-ad-dbrs-dynamicssve-code"
             azure.instance_ready_timeout = 3600
             azure.vm_name = 'dbdyn01'
             azure.location = 'WestUS2'
@@ -86,8 +88,8 @@ Vagrant.configure(2) do |config|
             azure.admin_username = "vagrant"
             azure.admin_password = "Fractalsol365"
             azure.dns_name = (0...15).map { (97 + rand(26)).chr }.join
-            # azure.virtual_network_name = 'dev-ad-dbrsdynamicscode'
-            azure.nsg_name = 'dev-ad-dbrsdynamicscode'
+            # azure.virtual_network_name = 'dev-ad-dbrsdynamicssvecode-dbsp2013code'
+            azure.nsg_name = 'dev-ad-dbrsdynamicssvecode-dbsp2013code'
             azure.wait_for_destroy = true
             override.vm.guest = :windows
             override.vm.box = "azure"
@@ -108,18 +110,84 @@ Vagrant.configure(2) do |config|
         vm_config.vm.provision :shell, path: "../dbservernamefix.ps1"
         vm_config.vm.provision :shell, path: "../sqlconfig.ps1"
         vm_config.vm.provision :shell, path: "../crmsslselfsignedcert.ps1"
-        vm_config.vm.provision :file, source: "../customizations/dbbackups/Contoso_MSCRM.bak", destination: "c:/dbbackups/Contoso_MSCRM.bak"
-        vm_config.vm.provision :shell, path: "../../../src/sqlprovision/restoredynamicsdb.ps1"
         vm_config.vm.provision :shell, path: "../../../src/sqlprovision/rsconfig.ps1"
         vm_config.vm.provision :shell, path: "../../../src/sqlprovision/rsserviceaccountupdate.ps1"
-        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovision.ps1"
+
+#        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovision.ps1"
+        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovisionsve.ps1"
+#        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovisionsvelp.ps1"
+#        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovision8.ps1"
+#        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovisionsve8.ps1"
+#        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsprovisionsvelp8.ps1"
+
         vm_config.vm.provision :file, source: "../../../src/crmsetup/dynamics_customizations-1.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/dynamics_customizations-1.ps1"
         vm_config.vm.provision :file, source: "../../../src/crmsetup/dynamics_customizations-1invoker.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/dynamics_customizations-1invoker.ps1"
         vm_config.vm.provision :shell, inline: "powershell -command 'cd c:/projects/vm-devops-starter/src/crmsetup; .\\dynamics_customizations-1invoker.ps1'"
         vm_config.vm.provision :file, source: "../../../src/crmsetup/dynamics_customizations-2.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/dynamics_customizations-2.ps1"
         vm_config.vm.provision :file, source: "../../../src/crmsetup/dynamics_customizations-2invoker.ps1", destination: "c:/projects/vm-devops-starter/src/crmsetup/dynamics_customizations-2invoker.ps1"
         vm_config.vm.provision :shell, inline: "powershell -command 'cd c:/projects/vm-devops-starter/src/crmsetup; .\\dynamics_customizations-2invoker.ps1'"
-#        vm_config.vm.provision :shell, path: "../../../src/crmsetup/dynamicsupgrade.ps1"
+        vm_config.vm.boot_timeout = 1800
+    end
+    config.vm.define "DBSP01" do |vm_config|
+        vm_config.vm.hostname = "DBWEB01"
+        vm_config.vm.box = "win2012r2-db-sp2013-code"
+        vm_config.vm.network "forwarded_port", guest: 3389, host: 13391, auto_correct: true
+        vm_config.vm.provider "virtualbox" do |vb, override|
+            override.vm.network :private_network, ip: "192.168.51.130", gateway: "192.168.51.1"
+            #vb.vm.gui = true
+            vb.memory = "8192"
+            vb.cpus = 4
+        end
+        vm_config.vm.provider "hyperv" do |hv, override|
+            hv.memory = "4096"
+            hv.maxmemory = "8192"
+            hv.cpus = 4
+            hv.ip_address_timeout = 1800
+        end
+        vm_config.vm.provider :azure do |azure, override|
+            azure.tenant_id = ENV['ARM_TENANT_ID']
+            azure.client_id = ENV['ARM_CLIENT_ID']
+            azure.client_secret = ENV['ARM_CLIENT_SECRET']
+            azure.subscription_id = ENV['ARM_SUBSCRIPTION_ID']
+            azure.resource_group_name = 'dev-ad-dbrsdynamicssvecode-dbsp2013code'
+            azure.vm_managed_image_id = "/subscriptions/#{ENV['ARM_SUBSCRIPTION_ID']}/resourceGroups/CommonRGWestEurope/providers/Microsoft.Compute/images/win2012r2-db-sp2013-code"
+            azure.instance_ready_timeout = 3600
+            azure.vm_name = 'dbweb01'
+            azure.location = 'WestUS2'
+            azure.vm_size = 'Standard_DS2_v2'
+            azure.admin_username = "vagrant"
+            azure.admin_password = "Fractalsol365"
+            azure.dns_name = (0...15).map { (97 + rand(26)).chr }.join
+            # azure.virtual_network_name = 'dev-ad-dbrsdynamicssvecode-dbsp2013code'
+            azure.nsg_name = 'dev-ad-dbrsdynamicssvecode-dbsp2013code'
+            azure.wait_for_destroy = true
+            override.vm.guest = :windows
+            override.vm.box = "azure"
+            override.winrm.transport = :ssl
+            override.winrm.port = 5986
+            override.winrm.ssl_peer_verification = false # must be false if using a self signed cert
+            override.vm.synced_folder ".", "/vagrant", disabled: true
+        end
+        vm_config.vm.provision :shell, path: "../../images/basepsmodules.ps1"
+        vm_config.vm.provision :shell, path: "../../images/sqlpsmodules.ps1"
+        vm_config.vm.provision :shell, path: "../../images/sppsmodules.ps1"
+        vm_config.vm.provision :shell, path: "../../images/devpsmodules.ps1"
+        vm_config.vm.provision :shell, path: "../../images/domainclientpsmodules.ps1"
+        vm_config.vm.provision :shell, path: "../domainclientnetwork.ps1"
+        vm_config.vm.provision :shell, path: "../domainclient.ps1"
+        vm_config.vm.provision "reload"
+        vm_config.vm.provision :shell, path: "../spdomainclientgroups.ps1", env: { "SPDEVOPSSTARTER_TRIALS" => 100 }
+        vm_config.vm.provision :shell, path: "../sqlconfig.ps1"
+        vm_config.vm.provision :shell, path: "../spfarm_2013.ps1"
+        vm_config.vm.provision :shell, path: "../../../src/spfarm/spserviceinstances.ps1"
+        vm_config.vm.provision :shell, path: "../../../src/spfarm/spfarm_customizations.ps1"
+        if ENV['SPDEVOPSSTARTER_VAGRANT_RUNJENKINS'] === 'TRUE'
+            vm_config.vm.provision :shell, path: "../slavepreprovisioning.ps1"
+            vm_config.vm.provision :shell, path: "../joinslave.ps1", env: {
+                "SPDEVOPSSTARTER_JENKINSLABEL" => ENV['SPDEVOPSSTARTER_VAGRANT_JENKINSLABEL'],
+                "SPDEVOPSSTARTER_JENKINSHOST" => ENV['SPDEVOPSSTARTER_JENKINSHOST']
+            }
+        end
         vm_config.vm.boot_timeout = 1800
     end
 end

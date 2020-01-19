@@ -2,7 +2,7 @@
 $KeyFolder = "C:\Temp";
 $KeyPassword = "sa@123@123";
 $TimeStamp = Get-Date -Format "-yyyyMMdd-HHmmss";
-$instanceName = "SPINTRA01";
+$instanceName = "SQLInstance01";
 $NameSpaceRS = "RS_$instanceName";
 $serviceName = "ReportServer`$$instanceName";
 $KeyFileName = Join-Path -Path $KeyFolder -ChildPath ( $InstanceName + $Timestamp + ".snk" );

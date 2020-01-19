@@ -1,4 +1,4 @@
-$configName = "SPDomainCustomizations"
+$configName = "CRMDomainCustomizations"
 Write-Host "$(Get-Date) Defining DSC"
 try
 {
@@ -39,14 +39,14 @@ try
             $MonitoringServiceAccountCredential
         )
         Import-DscResource -ModuleName PSDesiredStateConfiguration
-        Import-DscResource -ModuleName xActiveDirectory -ModuleVersion 2.21.0.0
+        Import-DscResource -ModuleName ActiveDirectoryDsc -ModuleVersion 5.0.0
 
         $domainName = "contoso.local";
 
         Node $AllNodes.NodeName
         {
 
-            xADUser SqlRSAccountCredentialUser
+            ADUser SqlRSAccountCredentialUser
             {
                 DomainName              = $domainName
                 UserName                = $SqlRSAccountCredential.GetNetworkCredential().UserName
@@ -54,7 +54,7 @@ try
                 PasswordNeverExpires    = $true
             }
             
-            xADUser CRMInstallAccountUser
+            ADUser CRMInstallAccountUser
             {
                 DomainName              = $domainName
                 UserName                = $CRMInstallAccountCredential.GetNetworkCredential().UserName
@@ -62,15 +62,15 @@ try
                 PasswordNeverExpires    = $true
             }
             
-            xADUser CRMServiceAccountUser
+            ADUser CRMServiceAccountUser
             {
                 DomainName              = $domainName
                 UserName                = $CRMServiceAccountCredential.GetNetworkCredential().UserName
                 Password                = $CRMServiceAccountCredential
                 PasswordNeverExpires    = $true
             }
-
-            xADUser DeploymentServiceAccountUser
+            
+            ADUser DeploymentServiceAccountUser
             {
                 DomainName              = $domainName
                 UserName                = $DeploymentServiceAccountCredential.GetNetworkCredential().UserName
@@ -78,7 +78,7 @@ try
                 PasswordNeverExpires    = $true
             }
 
-            xADUser SandboxServiceAccountUser
+            ADUser SandboxServiceAccountUser
             {
                 DomainName              = $domainName
                 UserName                = $SandboxServiceAccountCredential.GetNetworkCredential().UserName
@@ -86,7 +86,7 @@ try
                 PasswordNeverExpires    = $true
             }
 
-            xADUser VSSWriterServiceAccountUser
+            ADUser VSSWriterServiceAccountUser
             {
                 DomainName              = $domainName
                 UserName                = $VSSWriterServiceAccountCredential.GetNetworkCredential().UserName
@@ -94,7 +94,7 @@ try
                 PasswordNeverExpires    = $true
             }
 
-            xADUser AsyncServiceAccountUser
+            ADUser AsyncServiceAccountUser
             {
                 DomainName              = $domainName
                 UserName                = $AsyncServiceAccountCredential.GetNetworkCredential().UserName
@@ -102,7 +102,7 @@ try
                 PasswordNeverExpires    = $true
             }
 
-            xADUser MonitoringServiceAccountUser
+            ADUser MonitoringServiceAccountUser
             {
                 DomainName              = $domainName
                 UserName                = $MonitoringServiceAccountCredential.GetNetworkCredential().UserName
@@ -110,22 +110,22 @@ try
                 PasswordNeverExpires    = $true
             }
 
-            xADOrganizationalUnit CRMGroupsOU
+            ADOrganizationalUnit CRMGroupsOU
             {
                Name = "CRM groups"
                Path = "DC=contoso,DC=local"
             }
 
-            xADGroup CRMPrivUserGroup
+            ADGroup CRMPrivUserGroup
             {
                 GroupName           = "CRM01PrivUserGroup"
                 MembersToInclude    = $CRMInstallAccountCredential.GetNetworkCredential().UserName
                 GroupScope          = "Universal"
                 Path                = 'OU=CRM groups,DC=contoso,DC=local'
-                DependsOn           = "[xADUser]CRMInstallAccountUser"
+                DependsOn           = "[ADOrganizationalUnit]CRMGroupsOU", "[ADUser]CRMInstallAccountUser"
             }
             
-            xADObjectPermissionEntry OUPermissions
+            ADObjectPermissionEntry OUPermissions
             {
                 Ensure                              = 'Present'
                 Path                                = 'OU=CRM groups,DC=contoso,DC=local'
@@ -135,35 +135,45 @@ try
                 ObjectType                          = '00000000-0000-0000-0000-000000000000'
                 ActiveDirectorySecurityInheritance  = 'All'
                 InheritedObjectType                 = '00000000-0000-0000-0000-000000000000'
-                DependsOn                           = "[xADGroup]CRMPrivUserGroup"
+                DependsOn                           = "[ADGroup]CRMPrivUserGroup"
             }
         
-            xADGroup CRMSQLAccessGroup
+            ADGroup CRMSQLAccessGroup
             {
                 GroupName   = "CRM01SQLAccessGroup"
                 GroupScope  = "Universal"
                 Path        = 'OU=CRM groups,DC=contoso,DC=local'
+                DependsOn   = "[ADOrganizationalUnit]CRMGroupsOU"
             }
 
-            xADGroup CRMUserGroup
+            ADGroup CRMUserGroup
             {
                 GroupName   = "CRM01UserGroup"
                 Path        = 'OU=CRM groups,DC=contoso,DC=local'
+                DependsOn   = "[ADOrganizationalUnit]CRMGroupsOU"
             }
 
-            xADGroup CRMReportingGroup
+            ADGroup CRMReportingGroup
             {
                 GroupName   = "CRM01ReportingGroup"
                 GroupScope  = "Universal"
                 Path        = 'OU=CRM groups,DC=contoso,DC=local'
+                DependsOn   = "[ADOrganizationalUnit]CRMGroupsOU"
             }
 
-            xADGroup CRMPrivReportingGroup
+            ADGroup CRMPrivReportingGroup
             {
                 GroupName           = "CRM01PrivReportingGroup"
                 MembersToInclude    = $SqlRSAccountCredential.GetNetworkCredential().UserName
                 GroupScope          = "Universal"
                 Path                = 'OU=CRM groups,DC=contoso,DC=local'
+                DependsOn           = "[ADOrganizationalUnit]CRMGroupsOU"
+            }
+            
+            ADGroup EnterpriseAdminGroup
+            {
+                GroupName   = "Enterprise Admins"
+                MembersToInclude    = $CRMInstallAccountCredential.GetNetworkCredential().UserName
             }
 
         }
@@ -219,7 +229,7 @@ catch
     $_.Exception.Message
     Exit 1;
 }
-if ( $env:SPDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
+if ( $env:VMDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
 {
     Write-Host "$(Get-Date) Testing DSC"
     try {

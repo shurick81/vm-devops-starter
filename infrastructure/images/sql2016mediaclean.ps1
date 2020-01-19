@@ -8,7 +8,7 @@ try
         )
     
         Import-DscResource -ModuleName PSDesiredStateConfiguration
-        Import-DscResource -ModuleName StorageDsc -ModuleVersion 4.0.0.0
+        Import-DscResource -ModuleName StorageDsc -ModuleVersion 4.9.0.0
     
         Node $AllNodes.NodeName
         {
@@ -74,7 +74,7 @@ catch
     $_.Exception.Message
     Exit 1;
 }
-if ( $env:SPDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
+if ( $env:VMDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
 {
     Write-Host "$(Get-Date) Testing DSC"
     try {

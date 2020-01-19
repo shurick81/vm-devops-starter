@@ -79,7 +79,7 @@ while ( !$complete -and ( $trialsLeft -gt 0 ) ) {
         Exit 1;
     }
     $trialsLeft--;
-    if ( $env:SPDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
+    if ( $env:VMDEVOPSSTARTER_NODSCTEST -ne "TRUE" )
     {
         $failed = $false;
         Write-Host "$(Get-Date) Testing DSC"

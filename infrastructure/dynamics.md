@@ -76,7 +76,7 @@ Consider also removing downloaded ISO files:
 ## Creating
 
 PowerShell
-`cd` to `images` directory and run `.\preparevmimages.ps1 win2016-ad, win2016-ad-dbrs-dynamicssve-code`
+`cd` to `images` directory and run `.\preparevmimages.ps1 win2016-ad, win2016-dbrs-dynamicssve-code`
 
 In `stacks/dev-ad-dbrsdynamicssvecode/vagrantfile`, uncomment one provisioning depending on what Dynamics configuration you need to be provisioned:
 - dynamicsprovision.ps1 - Installing English Dynamics and provisioning English organization
