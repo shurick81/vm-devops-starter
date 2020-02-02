@@ -1,4 +1,4 @@
-$configName = "DevPSModules"
+$configName = "WebPSModules"
 Write-Host "$(Get-Date) Defining DSC"
 try
 {
@@ -13,13 +13,58 @@ try
         Node $AllNodes.NodeName
         {
 
-            PSModule "PSModule_cChoco"
+            PSModule "PSModule_xPendingReboot"
             {
                 Ensure              = "Present"
-                Name                = "cChoco"
+                Name                = "xPendingReboot"
                 Repository          = "PSGallery"
                 InstallationPolicy  = "Trusted"
-                RequiredVersion     = "2.3.1.0"
+                RequiredVersion     = "0.3.0.0"
+            }
+
+            PSModule "PSModule_StorageDsc"
+            {
+                Ensure              = "Present"
+                Name                = "StorageDsc"
+                Repository          = "PSGallery"
+                InstallationPolicy  = "Trusted"
+                RequiredVersion     = "4.9.0.0"
+            }
+    
+            PSModule "PSModule_NetworkingDsc"
+            {
+                Ensure              = "Present"
+                Name                = "NetworkingDsc"
+                Repository          = "PSGallery"
+                InstallationPolicy  = "Trusted"
+                RequiredVersion     = "7.4.0.0"
+            }
+
+            PSModule "PSModule_SqlServerDsc"
+            {
+                Ensure              = "Present"
+                Name                = "SqlServerDsc"
+                Repository          = "PSGallery"
+                InstallationPolicy  = "Trusted"
+                RequiredVersion     = "11.1.0.0"
+            }
+
+            PSModule "PSModule_xWebAdministration"
+            {
+                Ensure              = "Present"
+                Name                = "xWebAdministration"
+                Repository          = "PSGallery"
+                InstallationPolicy  = "Trusted"
+                RequiredVersion     = "3.1.1"
+            }
+
+            PSModule "PSModule_SharePointDSC"
+            {
+                Ensure              = "Present"
+                Name                = "SharePointDSC"
+                Repository          = "PSGallery"
+                InstallationPolicy  = "Trusted"
+                RequiredVersion     = "3.7.0.0"
             }
 
             PSModule "PSModule_xSystemSecurity"
@@ -28,25 +73,7 @@ try
                 Name                = "xSystemSecurity"
                 Repository          = "PSGallery"
                 InstallationPolicy  = "Trusted"
-                RequiredVersion     = "1.4.0.0"
-            }
-            
-            PSModule "PSModule_PSPKI"
-            {
-                Ensure              = "Present"
-                Name                = "PSPKI"
-                Repository          = "PSGallery"
-                InstallationPolicy  = "Trusted"
-                RequiredVersion     = "3.3.0.0"
-            }
-            
-            PSModule "PSModule_xSmbShare"
-            {
-                Ensure              = "Present"
-                Name                = "xSmbShare"
-                Repository          = "PSGallery"
-                InstallationPolicy  = "Trusted"
-                RequiredVersion     = "2.1.0.0"
+                RequiredVersion     = "1.2.0.0"
             }
 
             PSModule "PSModule_CertificateDsc"
@@ -55,25 +82,7 @@ try
                 Name                = "CertificateDsc"
                 Repository          = "PSGallery"
                 InstallationPolicy  = "Trusted"
-                RequiredVersion     = "4.1.0.0"
-            }
-
-            PSModule "PSModule_CredentialManager"
-            {
-                Ensure              = "Present"
-                Name                = "CredentialManager"
-                Repository          = "PSGallery"
-                InstallationPolicy  = "Trusted"
-                RequiredVersion     = "2.0"
-            }
-
-            PSModule "PSModule_SharePointPnPPowerShell2013"
-            {
-                Ensure              = "Present"
-                Name                = "SharePointPnPPowerShell2013"
-                Repository          = "PSGallery"
-                InstallationPolicy  = "Trusted"
-                RequiredVersion     = "3.1.1809.0"
+                RequiredVersion     = "4.7.0.0"
             }
 
         }

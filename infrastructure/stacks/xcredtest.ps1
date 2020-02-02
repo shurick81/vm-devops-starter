@@ -1,6 +1,6 @@
 Get-WSManCredSSP
 $securedPassword = ConvertTo-SecureString "c0mp1Expa~~" -AsPlainText -Force
-$SPInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spadm16", $securedPassword );
+$SPInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spadm", $securedPassword );
 $result = Invoke-Command "OPS01.contoso.local" -Credential $SPInstallAccountCredential -Authentication CredSSP {
     Get-ChildItem c:\
 }

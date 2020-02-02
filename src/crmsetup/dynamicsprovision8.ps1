@@ -28,11 +28,11 @@ Invoke-Command "$env:COMPUTERNAME.$domainName" -Credential $CRMInstallAccountCre
         -MonitoringServiceAccount $MonitoringServiceAccountCredential `
         -CreateWebSite `
         -WebSitePort 5555 `
-        -WebSiteUrl https://$env:COMPUTERNAME.contoso.local `
+        -WebSiteUrl https://crm.contoso.local `
         -Organization "Contoso Ltd." `
         -OrganizationUniqueName Contoso `
     -ReportingUrl http://$dbHostName/ReportServer_SQLInstance01
 }
 Invoke-Command "$env:COMPUTERNAME.$domainName" -Credential $CRMInstallAccountCredential -Authentication CredSSP {
-    Install-Dynamics365Update -MediaDir C:\Install\Dynamics\CRM2016ServicePack2Update11Enu
+    Install-Dynamics365Update -MediaDir C:\Install\Dynamics\CRM2016ServicePack2Update13Enu
 }

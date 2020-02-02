@@ -15,15 +15,15 @@ try
             $DomainSafeModeAdministratorPasswordCredential
         )
         Import-DscResource -ModuleName PSDesiredStateConfiguration
-#        Import-DscResource -ModuleName CertificateDsc -ModuleVersion 4.1.0.0
+#        Import-DscResource -ModuleName CertificateDsc -ModuleVersion 4.7.0.0
         Import-DscResource -ModuleName SqlServerDsc -ModuleVersion 11.1.0.0
-        Import-DscResource -ModuleName xNetworking -ModuleVersion 5.6.0.0
+        Import-DscResource -ModuleName NetworkingDsc -ModuleVersion 7.4.0.0
 
         $domainName = "contoso.local";
 
         Node $AllNodes.NodeName
         {
-#            $pfxPassword = "asd94y3475n";
+#            $pfxPassword = "576eeec5667";
 #            $securedPassword = ConvertTo-SecureString $pfxPassword -AsPlainText -Force
 #            $pfxCredential = New-Object System.Management.Automation.PSCredential( "fake", $securedPassword )
 #
@@ -71,7 +71,7 @@ try
                 #UseSsl                       = $true
             }
 
-            xFireWall AllowHTTP
+            FireWall AllowHTTP
             {
                 Name        = "HTTP"
                 DisplayName = "HTTP"
@@ -84,13 +84,13 @@ try
                 Description = "Firewall rule to allow web sites publishing"
             }
             
-            xFireWall WMI-WINMGMT-In-TCP
+            FireWall WMI-WINMGMT-In-TCP
             {
                 Name        = "WMI-WINMGMT-In-TCP"
                 Enabled     = "True"
             }
             
-            xFireWall WMI-RPCSS-In-TCP
+            FireWall WMI-RPCSS-In-TCP
             {
                 Name        = "WMI-RPCSS-In-TCP"
                 Enabled     = "True"

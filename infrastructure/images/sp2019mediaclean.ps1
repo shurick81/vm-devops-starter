@@ -1,4 +1,4 @@
-$configName = "FakeSMBShare"
+$configName = "SPMediaClean"
 Write-Host "$(Get-Date) Defining DSC"
 try
 {
@@ -6,24 +6,29 @@ try
     {
         param(
         )
-
+    
         Import-DscResource -ModuleName PSDesiredStateConfiguration
-        Import-DscResource -ModuleName xSmbShare -ModuleVersion 2.1.0.0
-
+        Import-DscResource -ModuleName StorageDsc -ModuleVersion 4.9.0.0
+    
         Node $AllNodes.NodeName
-        {        
+        {
 
-            File FakeSMBSharedDirectory {
-                DestinationPath = "c:\fakesmbshare"
-                Type = "Directory"
+            $spImageUrl = "https://download.microsoft.com/download/C/B/A/CBA01793-1C8A-4671-BE0D-38C9E5BBD0E9/officeserver.img";
+            $SPImageUrl -match '[^/\\&\?]+\.\w{3,4}(?=([\?&].*$|$))' | Out-Null
+            $SPImageFileName = $matches[0]
+            $SPImageDestinationPath = "C:\Install\SP2019RTMImage\$SPImageFileName"
+
+            MountImage SPServerImageNotMounted
+            {
+                ImagePath   = $SPImageDestinationPath
+                Ensure      = 'Absent'
             }
 
-            xSmbShare FakeSMBShare
-            {
-                Ensure = "Present" 
-                Name   = "fakesmbshare"
-                Path = "c:\fakesmbshare"  
-                Description = "This is a fake SMB Share"          
+            File SPServerImageAbsent {
+                Ensure          = "Absent"
+                DestinationPath = $SPImageDestinationPath
+                Force           = $true
+                DependsOn       = "[MountImage]SPServerImageNotMounted"
             }
 
         }
@@ -38,7 +43,6 @@ catch
 $configurationData = @{ AllNodes = @(
     @{ NodeName = $env:COMPUTERNAME; PSDscAllowPlainTextPassword = $True; PsDscAllowDomainUser = $True }
 ) }
-
 Write-Host "$(Get-Date) Compiling DSC"
 try
 {

@@ -28,7 +28,7 @@ try
                 Name                = "xDnsServer"
                 Repository          = "PSGallery"
                 InstallationPolicy  = "Trusted"
-                RequiredVersion     = "1.9.0.0"
+                RequiredVersion     = "1.13.0.0"
             }
 
         }

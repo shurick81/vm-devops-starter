@@ -10,10 +10,10 @@ if (-not (Get-PSSnapin -Name Microsoft.Crm.PowerShell -ErrorAction SilentlyConti
 $WebAddressSettings = Get-CrmSetting -SettingType WebAddressSettings
 
 $WebAddressSettings.RootDomainScheme = "https"
-$WebAddressSettings.WebAppRootDomain = "$env:COMPUTERNAME.contoso.local:443"
-$WebAddressSettings.SdkRootDomain = "$env:COMPUTERNAME.contoso.local:443"
-$WebAddressSettings.DiscoveryRootDomain = "$env:COMPUTERNAME.contoso.local:443"
-$WebAddressSettings.DeploymentSdkRootDomain = "$env:COMPUTERNAME.contoso.local:443"
+$WebAddressSettings.WebAppRootDomain = "crm.contoso.local:443"
+$WebAddressSettings.SdkRootDomain = "crm.contoso.local:443"
+$WebAddressSettings.DiscoveryRootDomain = "crm.contoso.local:443"
+$WebAddressSettings.DeploymentSdkRootDomain = "crm.contoso.local:443"
 
 Set-CrmSetting -Setting $WebAddressSettings
 Write-Host "Effective WebAddressSettings:"
@@ -21,6 +21,7 @@ $WebAddressSettings
 $CrmOrganization = Get-CrmOrganization
 Write-Host "Effective CrmOrganization:"
 $CrmOrganization
+Set-Content -Path "C:\Install\DynamicsCrmOrganizationId.txt" $CrmOrganization.Id
 
 if($RemoveSnapInWhenDone)
 {

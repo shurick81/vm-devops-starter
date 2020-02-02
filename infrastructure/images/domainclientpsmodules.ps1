@@ -13,13 +13,13 @@ try
         Node $AllNodes.NodeName
         {
 
-            PSModule "PSModule_xNetworking"
+            PSModule "PSModule_NetworkingDsc"
             {
                 Ensure              = "Present"
-                Name                = "xNetworking"
+                Name                = "NetworkingDsc"
                 Repository          = "PSGallery"
                 InstallationPolicy  = "Trusted"
-                RequiredVersion     = "5.6.0.0"
+                RequiredVersion     = "7.4.0.0"
             }
 
             PSModule "PSModule_ComputerManagementDsc"
@@ -28,7 +28,7 @@ try
                 Name                = "ComputerManagementDsc"
                 Repository          = "PSGallery"
                 InstallationPolicy  = "Trusted"
-                RequiredVersion     = "5.2.0.0"
+                RequiredVersion     = "7.1.0.0"
             }
 
         }

@@ -61,11 +61,11 @@ try
                 DependsOn               = "[cChocoInstaller]ChocoInstalled"
             }
 
-            cChocoPackageInstaller Office365businessInstalled
-            {
-                Name                    = "office365business"
-                DependsOn               = "[cChocoInstaller]ChocoInstalled"
-            }
+            #cChocoPackageInstaller Office365businessInstalled
+            #{
+            #    Name                    = "office365business"
+            #    DependsOn               = "[cChocoInstaller]ChocoInstalled"
+            #}
 
             WindowsFeatureSet DomainFeatures
             {

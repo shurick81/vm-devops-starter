@@ -6,13 +6,22 @@ try
     {
 
         Import-DscResource -ModuleName PSDesiredStateConfiguration
-        Import-DscResource -ModuleName xNetworking -ModuleVersion 5.6.0.0
+        Import-DscResource -ModuleName NetworkingDsc -ModuleVersion 7.4.0.0
         Import-DscResource -ModuleName SqlServerDsc -ModuleVersion 11.1.0.0
 
         Node $AllNodes.NodeName
         {
             
-            xFireWall AllowSQL2014Service
+            SqlServerMaxDop SQLServerMaxDop
+            {
+                ServerName      = $NodeName
+                Ensure          = 'Present'
+                DynamicAlloc    = $false
+                MaxDop          = 1
+                InstanceName    = "SQLInstance01"
+            }
+        
+            FireWall AllowSQL2014Service
             {
                 Name        = "AllowSQL2014Service"
                 DisplayName = "Allow SQL 2014 Service"
@@ -25,7 +34,7 @@ try
                 Description = "Firewall rule to allow SQL communication"
             }
             
-            xFireWall AllowSQL2016Service
+            FireWall AllowSQL2016Service
             {
                 Name        = "AllowSQL2016Service"
                 DisplayName = "Allow SQL 2016 Service"
@@ -38,7 +47,7 @@ try
                 Description = "Firewall rule to allow SQL communication"
             }
             
-            xFireWall AllowSQLBrowser
+            FireWall AllowSQLBrowser
             {
                 Name        = "AllowSQLBrowser"
                 DisplayName = "Allow SQL Browser"
@@ -51,7 +60,7 @@ try
                 Description = "Firewall rule to allow SQL communication"
             }
             
-            xFireWall DirectoryService
+            FireWall DirectoryService
             {
                 Name        = "DirectoryService"
                 DisplayName = "Directory Service"

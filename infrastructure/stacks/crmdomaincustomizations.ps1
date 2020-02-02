@@ -1,3 +1,4 @@
+# Following https://docs.microsoft.com/en-us/dynamics365/customerengagement/on-premises/deploy/microsoft-dynamics-365-server-roles#group-membership-requirements ?
 $configName = "CRMDomainCustomizations"
 Write-Host "$(Get-Date) Defining DSC"
 try

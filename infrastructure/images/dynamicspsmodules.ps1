@@ -28,7 +28,7 @@ try
                 Name                = "CertificateDsc"
                 Repository          = "PSGallery"
                 InstallationPolicy  = "Trusted"
-                RequiredVersion     = "4.1.0.0"
+                RequiredVersion     = "4.7.0.0"
             }
 
             PSModule "PSModule_xWebAdministration"
@@ -37,7 +37,7 @@ try
                 Name                = "xWebAdministration"
                 Repository          = "PSGallery"
                 InstallationPolicy  = "Trusted"
-                RequiredVersion     = "1.19.0.0"
+                RequiredVersion     = "3.1.1"
             }
 
             PSModule "PSModule_xSystemSecurity"
@@ -55,7 +55,7 @@ try
                 Name                = "Dynamics365Configuration"
                 Repository          = "PSGallery"
                 InstallationPolicy  = "Trusted"
-                RequiredVersion     = "1.4.2"
+                RequiredVersion     = "1.5"
             }
 
         }

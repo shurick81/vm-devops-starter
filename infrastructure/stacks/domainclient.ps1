@@ -12,7 +12,7 @@ try
         )
 
         Import-DscResource -ModuleName PSDesiredStateConfiguration
-        Import-DSCResource -ModuleName ComputerManagementDsc -ModuleVersion 5.2.0.0
+        Import-DSCResource -ModuleName ComputerManagementDsc -ModuleVersion 7.1.0.0
 
         Node $AllNodes.NodeName
         {        

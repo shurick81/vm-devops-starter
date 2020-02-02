@@ -49,15 +49,15 @@ try
                 RequiredVersion     = "3.3.0.0"
             }
             
-            PSModule "PSModule_xSmbShare"
+            PSModule "PSModule_PnP"
             {
                 Ensure              = "Present"
-                Name                = "xSmbShare"
+                Name                = "SharePointPnPPowerShell2013"
                 Repository          = "PSGallery"
                 InstallationPolicy  = "Trusted"
-                RequiredVersion     = "2.1.0.0"
+                RequiredVersion     = "3.17.2001.2"
             }
-
+            
         }
     }
 }

@@ -26,7 +26,7 @@ try
                 )
         
                 Import-DscResource -ModuleName PSDesiredStateConfiguration
-                Import-DscResource -ModuleName xNetworking -ModuleVersion 5.6.0.0
+                Import-DscResource -ModuleName NetworkingDsc -ModuleVersion 7.4.0.0
         
                 $netIP = Get-NetAdapter 'Ethernet 2' | Get-NetIPAddress -ea 0 -AddressFamily IPv4;
                 $ipNumbers = $netIP.IPAddress.Split( "." );
@@ -34,14 +34,14 @@ try
                 Node $AllNodes.NodeName
                 {        
         
-                    xDefaultGatewayAddress SetDefaultGateway 
+                    DefaultGatewayAddress SetDefaultGateway 
                     { 
                         Address        = "$ipAddressPrefix.1"
                         InterfaceAlias = 'Ethernet 2'
                         AddressFamily  = 'IPv4'
                     }
                     
-                    xDnsServerAddress DnsServerAddress
+                    DnsServerAddress DnsServerAddress
                     {
                         InterfaceAlias = 'Ethernet 2'
                         AddressFamily  = 'IPv4'
@@ -61,13 +61,13 @@ try
                 )
         
                 Import-DscResource -ModuleName PSDesiredStateConfiguration
-                Import-DscResource -ModuleName xNetworking -ModuleVersion 5.6.0.0
+                Import-DscResource -ModuleName NetworkingDsc -ModuleVersion 7.4.0.0
         
                 $resolved = Resolve-DnsName AD01 -Type A;
                 Node $AllNodes.NodeName
                 {        
                     
-                    xDnsServerAddress DnsServerAddress
+                    DnsServerAddress DnsServerAddress
                     {
                         InterfaceAlias = 'Ethernet'
                         AddressFamily  = 'IPv4'

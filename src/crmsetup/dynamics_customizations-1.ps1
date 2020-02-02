@@ -12,17 +12,17 @@ try
             $CRMInstallAccountCredential
         )
         Import-DscResource -ModuleName PSDesiredStateConfiguration
-        Import-DscResource -ModuleName CertificateDsc -ModuleVersion 4.1.0.0
-        Import-DscResource -ModuleName xWebAdministration -ModuleVersion 1.19.0.0
+        Import-DscResource -ModuleName CertificateDsc -ModuleVersion 4.7.0.0
+        Import-DscResource -ModuleName xWebAdministration -ModuleVersion 3.1.1
         Import-DSCResource -Module xSystemSecurity -Name xIEEsc -ModuleVersion 1.4.0.0
 
         Node $AllNodes.NodeName
         {
-            $pfxPassword = "asd94y3475n";
+            $pfxPassword = "576eeec5667";
             $securedPassword = ConvertTo-SecureString $pfxPassword -AsPlainText -Force
             $pfxCredential = New-Object System.Management.Automation.PSCredential( "fake", $securedPassword )
 
-            $hostName = "$env:COMPUTERNAME.contoso.local";
+            $hostName = "crm.contoso.local";
             $pfxPath = "c:\certs\$hostName.pfx";
             $cerPath = "c:\certs\$hostName.cer";
             $pfx = New-Object -TypeName "System.Security.Cryptography.X509Certificates.X509Certificate2";
@@ -68,7 +68,7 @@ try
                         Port = 443
                         CertificateThumbprint = $pfx.thumbprint
                         CertificateStoreName = "My"
-                        HostName = "$env:COMPUTERNAME.contoso.local"
+                        HostName = $hostName
                         SslFlags = 1
                     }
                 )
@@ -77,7 +77,7 @@ try
             Registry CrmLocalZone
             {
                 Ensure                  = "Present"
-                Key                     = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap\Domains\$env:COMPUTERNAME.contoso.local"
+                Key                     = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap\Domains\$hostName"
                 ValueName               = "https"
                 ValueType               = "DWord"
                 ValueData               = "1"

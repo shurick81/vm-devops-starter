@@ -6,13 +6,13 @@ try
     {
 
         Import-DscResource -ModuleName PSDesiredStateConfiguration
-        Import-DscResource -ModuleName xNetworking -ModuleVersion 5.6.0.0
+        Import-DscResource -ModuleName NetworkingDsc -ModuleVersion 7.4.0.0
         Import-DscResource -ModuleName SqlServerDsc -ModuleVersion 11.1.0.0
 
         Node $AllNodes.NodeName
         {
             
-            xFireWall SQLFirewallRuleTCP
+            FireWall SQLFirewallRuleTCP
             {
                 Name        = "AllowSQLConnection"
                 DisplayName = "Allow SQL Connection"
@@ -25,7 +25,7 @@ try
                 Description = "Firewall rule to allow SQL communication"
             }
 
-            xFireWall SQLFirewallRuleBrowser
+            FireWall SQLFirewallRuleBrowser
             {
                 Name        = "AllowSQLBrowser"
                 DisplayName = "Allow SQL Browser"

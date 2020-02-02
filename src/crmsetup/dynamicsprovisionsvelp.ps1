@@ -28,7 +28,7 @@ Invoke-Command "$env:COMPUTERNAME.$domainName" -Credential $CRMInstallAccountCre
         -MonitoringServiceAccount $MonitoringServiceAccountCredential `
         -CreateWebSite `
         -WebSitePort 5555 `
-        -WebSiteUrl https://$env:COMPUTERNAME.contoso.local `
+        -WebSiteUrl https://crm.contoso.local `
         -Organization "Contoso Ltd." `
         -OrganizationUniqueName Contoso `
         -ReportingUrl http://$dbHostName/ReportServer_SQLInstance01
@@ -77,12 +77,12 @@ if ( Get-PSSnapin Microsoft.Crm.PowerShell -ErrorAction Ignore ) {
     Exit 1;
 }
 Invoke-Command "$env:COMPUTERNAME.$domainName" -Credential $CRMInstallAccountCredential -Authentication CredSSP {
-    Install-Dynamics365Update -MediaDir C:\Install\Dynamics\Dynamics365Server90Update09Enu
+    Install-Dynamics365Update -MediaDir C:\Install\Dynamics\Dynamics365Server90Update11Enu
 }
 if ( $dbHostName -eq $env:COMPUTERNAME ) {
-    $mediaDir = "C:\Install\Dynamics\Dynamics365Server90ReportingExtensionsUpdate09Enu";
+    $mediaDir = "C:\Install\Dynamics\Dynamics365Server90ReportingExtensionsUpdate11Enu";
 } else {
-    $mediaDir = "\\$env:COMPUTERNAME\c$\Install\Dynamics\Dynamics365Server90ReportingExtensionsUpdate09Enu";
+    $mediaDir = "\\$env:COMPUTERNAME\c$\Install\Dynamics\Dynamics365Server90ReportingExtensionsUpdate11Enu";
 }
 Write-Output "dbHostName is $dbHostName"
 Invoke-Command "$dbHostName.$domainName" -Credential $CRMInstallAccountCredential -Authentication CredSSP {
