@@ -14,7 +14,7 @@ try
 
         Node $AllNodes.NodeName
         {
-            $hostName = "crm.contoso.local";
+            $hostName = "crm.contos00.local";
             $pfxPath = "c:\certs\$hostName.pfx";
 
             File SPCertFile {
@@ -33,7 +33,7 @@ catch
     Exit 1;
 }
 $securedPassword = ConvertTo-SecureString "c0mp1Expa~~" -AsPlainText -Force
-$CRMInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmadmin", $securedPassword );
+$CRMInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_crmadmin", $securedPassword );
 
 $configurationData = @{ AllNodes = @(
     @{ NodeName = $env:COMPUTERNAME; PSDscAllowPlainTextPassword = $True; PsDscAllowDomainUser = $True }

@@ -60,8 +60,8 @@ catch
 $securedPassword = ConvertTo-SecureString "sUp3rcomp1eX" -AsPlainText -Force
 $SPPassphraseCredential = New-Object System.Management.Automation.PSCredential( "fakeaccount", $securedPassword )
 $securedPassword = ConvertTo-SecureString "c0mp1Expa~~" -AsPlainText -Force
-$SPInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spadm", $securedPassword );
-$SPFarmAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spfrm", $securedPassword );
+$SPInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_spadm", $securedPassword );
+$SPFarmAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_spfrm", $securedPassword );
 
 $configurationData = @{ AllNodes = @(
     @{ NodeName = $env:COMPUTERNAME; PSDscAllowPlainTextPassword = $True; PsDscAllowDomainUser = $True }

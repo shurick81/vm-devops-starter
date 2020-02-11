@@ -13,7 +13,7 @@ Run in PowerShell:
 Set-ExecutionPolicy Bypass -Force;
 iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 choco install -y packer
-choco install -y vagrant --version 2.2.3
+choco install -y vagrant --version 2.2.7
 ```
 Then reboot for finishing insalling Vagrant and continue with the following snippet:
 ```PowerShell
@@ -51,7 +51,7 @@ If PowerShell scripts are allowed on the machine, run `..\localdeploy.ps1`. Othe
 
 Run `vagrant rdp ADDBDYN01` or RDP to `127.0.0.1:13390`
 
-account: `contoso\_crmadmin`
+account: `contos00\_crmadmin`
 
 pass: `c0mp1Expa~~`
 
@@ -92,7 +92,7 @@ If PowerShell scripts are allowed on the machine, run `..\localdeploy.ps1`. Othe
 
 Run `vagrant rdp DBDYN01` or RDP to `127.0.0.1:13391`
 
-account: `contoso\_crmadmin`
+account: `contos00\_crmadmin`
 
 pass: `c0mp1Expa~~`
 
@@ -101,14 +101,14 @@ pass: `c0mp1Expa~~`
 
 1. On DBDYN01 box, open
 
-`https://crm.contoso.local/Contoso/tools/documentmanagement/documentmanagement.aspx`
+`https://crm.contos00.local/Contos00/tools/documentmanagement/documentmanagement.aspx`
 
 2. Click `Enable Server-Based SharePoint Integration`.
 3. Click `Next`.
 4. Click `Next`.
 5. Enter following URL:
 
-`https://intranet.contoso.local/sites/crmdocuments`
+`https://intranet.contos00.local/sites/crmdocuments`
 
 6. Enter SharePoint Realm ID:
 
@@ -120,7 +120,7 @@ pass: `c0mp1Expa~~`
 10. Click `Finish`.
 11. Enter following URL:
 
-`https://intranet.contoso.local/sites/crmdocuments`
+`https://intranet.contos00.local/sites/crmdocuments`
 
 12. Click `Next`.
 13. Click `Next`.

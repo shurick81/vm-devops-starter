@@ -166,8 +166,8 @@ catch
     Exit 1;
 }
 $securedPassword = ConvertTo-SecureString "c0mp1Expa~~" -AsPlainText -Force
-$SPInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spadm", $securedPassword );
-$SPServicesAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spsrv", $securedPassword );
+$SPInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_spadm", $securedPassword );
+$SPServicesAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_spsrv", $securedPassword );
 
 $configurationData = @{ AllNodes = @(
     @{ NodeName = $env:COMPUTERNAME; PSDscAllowPlainTextPassword = $True; PsDscAllowDomainUser = $True }

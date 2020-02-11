@@ -1,12 +1,12 @@
 $securedPassword = ConvertTo-SecureString "c0mp1Expa~~" -AsPlainText -Force
-$CRMInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmadmin", $securedPassword );
+$CRMInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_crmadmin", $securedPassword );
 if ( -not ( Get-PSSnapin -Name Microsoft.Crm.PowerShell -ErrorAction SilentlyContinue ) )
 {
     Add-PSSnapin Microsoft.Crm.PowerShell
     $RemoveSnapInWhenDone = $True
 }
 Write-Host "$(Get-Date) Starting Import-CrmOrganization";
-$importJobId = Import-CrmOrganization -DatabaseName Contoso_MSCRM_Old -SqlServerName $env:COMPUTERNAME\SQLInstance01 -SrsUrl http://$env:COMPUTERNAME/ReportServer_SQLInstance01 -UserMappingMethod ByAccount -DisplayName "Contoso LTD imported" -Name "ContosoImported" -Credential $CRMInstallAccountCredential -DwsServerUrl "http://$env:COMPUTERNAME`:5555/XrmDeployment/2011/deployment.svc";
+$importJobId = Import-CrmOrganization -DatabaseName Contos00_MSCRM_Old -SqlServerName $env:COMPUTERNAME\SQLInstance01 -SrsUrl http://$env:COMPUTERNAME/ReportServer_SQLInstance01 -UserMappingMethod ByAccount -DisplayName "Contos00 LTD imported" -Name "Contos00Imported" -Credential $CRMInstallAccountCredential -DwsServerUrl "http://$env:COMPUTERNAME`:5555/XrmDeployment/2011/deployment.svc";
 $operationStatus = Get-CrmOperationStatus -OperationId $importJobId
 do {
     Write-Host "$(Get-Date) Waiting until CRM installation job is done";

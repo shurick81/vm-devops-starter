@@ -16,7 +16,7 @@ try
             {
                 Ensure = "Present"
                 Role = "Client"
-                DelegateComputers = "*.contoso.local"
+                DelegateComputers = "*.contos00.local"
             }
 
         }

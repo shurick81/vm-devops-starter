@@ -19,7 +19,7 @@ try
         Import-DscResource -ModuleName SqlServerDsc -ModuleVersion 11.1.0.0
         Import-DscResource -ModuleName NetworkingDsc -ModuleVersion 7.4.0.0
 
-        $domainName = "contoso.local";
+        $domainName = "contos00.local";
 
         Node $AllNodes.NodeName
         {
@@ -27,7 +27,7 @@ try
 #            $securedPassword = ConvertTo-SecureString $pfxPassword -AsPlainText -Force
 #            $pfxCredential = New-Object System.Management.Automation.PSCredential( "fake", $securedPassword )
 #
-#            $hostName = "db01.contoso.local"
+#            $hostName = "db01.contos00.local"
 #            $pfxPath = "c:\certs\$hostName.pfx";
 #            $cerPath = "c:\certs\$hostName.cer";
 #            $pfx = New-Object -TypeName "System.Security.Cryptography.X509Certificates.X509Certificate2";

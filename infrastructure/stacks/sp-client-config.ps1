@@ -12,7 +12,7 @@ try
         )
         Import-DscResource -ModuleName PSDesiredStateConfiguration
 
-        $domainName = "contoso.local";
+        $domainName = "contos00.local";
 
         Node $AllNodes.NodeName
         {
@@ -41,7 +41,7 @@ $configurationData = @{ AllNodes = @(
 ) }
 
 $securedPassword = ConvertTo-SecureString "c0mp1Expa~~" -AsPlainText -Force
-$SPInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spadm", $securedPassword );
+$SPInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_spadm", $securedPassword );
 Write-Host "$(Get-Date) Compiling DSC"
 try
 {

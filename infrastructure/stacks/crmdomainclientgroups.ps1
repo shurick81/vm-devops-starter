@@ -20,7 +20,7 @@ try
             {
                 GroupName           = "Administrators"
                 Credential          = $DomainAdminCredential
-                MembersToInclude    = "contoso\CRM01PrivUserGroup", "contoso\_crmasync", "contoso\_crmsrv", "contoso\_crmdplsrv", "contoso\_ssrs"
+                MembersToInclude    = "contos00\CRM01PrivUserGroup", "contos00\_crmasync", "contos00\_crmsrv", "contos00\_crmdplsrv", "contos00\_ssrs"
             }
 
             #Faulty DCSResources throws "Server names cannot contain a space character"
@@ -28,7 +28,7 @@ try
             #{
             #    GroupName           = "Performance Log Users"
             #    Credential          = $DomainAdminCredential
-            #    MembersToInclude    = "contoso\_crmasync", "contoso\_crmsrv"
+            #    MembersToInclude    = "contos00\_crmasync", "contos00\_crmsrv"
             #}
 
         }
@@ -45,7 +45,7 @@ $configurationData = @{ AllNodes = @(
 ) }
 
 $securedPassword = ConvertTo-SecureString "Fractalsol365" -AsPlainText -Force
-$DomainAdminCredential = New-Object System.Management.Automation.PSCredential( "contoso\vagrant", $securedPassword )
+$DomainAdminCredential = New-Object System.Management.Automation.PSCredential( "contos00\vagrant", $securedPassword )
 Write-Host "$(Get-Date) Compiling DSC"
 try
 {

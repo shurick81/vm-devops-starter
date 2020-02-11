@@ -15,7 +15,7 @@ try
             $securedPassword = ConvertTo-SecureString $pfxPassword -AsPlainText -Force
             $pfxCredential = New-Object System.Management.Automation.PSCredential( "fake", $securedPassword )
 
-            $hostName = "intranet.contoso.local";
+            $hostName = "intranet.contos00.local";
             $pfxPath = "c:\certs\$hostName.pfx";
             $cerPath = "c:\certs\$hostName.cer";
             $pfx = New-Object -TypeName "System.Security.Cryptography.X509Certificates.X509Certificate2";

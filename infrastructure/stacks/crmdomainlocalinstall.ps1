@@ -9,7 +9,7 @@ try
         Import-DscResource -ModuleName PSDesiredStateConfiguration
         Import-DscResource -ModuleName ActiveDirectoryDsc -ModuleVersion 5.0.0
 
-        $domainName = "contoso.local";
+        $domainName = "contos00.local";
 
         Node $AllNodes.NodeName
         {
@@ -44,12 +44,12 @@ try
                 ValueData   = "1"
             }
 
-            Registry CredSSPContoso
+            Registry CredSSPContos00
             {
                 Ensure      = "Present"
                 Key         = "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CredentialsDelegation\AllowFreshCredentialsWhenNTLMOnly"
                 ValueName   = "1"
-                ValueData   = "wsman/*.contoso.local"
+                ValueData   = "wsman/*.contos00.local"
             }
 
         }

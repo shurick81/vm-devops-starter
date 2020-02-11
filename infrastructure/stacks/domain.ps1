@@ -1,4 +1,4 @@
-$configName = "SPDomain"
+$configName = "Domain"
 Write-Host "$(Get-Date) Defining DSC"
 try
 {
@@ -17,7 +17,7 @@ try
         Import-DscResource -ModuleName PSDesiredStateConfiguration
         Import-DscResource -ModuleName ActiveDirectoryDsc -ModuleVersion 5.0.0
 
-        $domainName = "contoso.local";
+        $domainName = "contos00.local";
 
         Node $AllNodes.NodeName
         {

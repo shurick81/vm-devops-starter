@@ -20,7 +20,7 @@ If ( $Key.HRESULT -ne 0 ) {
 
 # change the service account
 $changeServiceArguments = @{
-    StartName       = "contoso\_ssrs"
+    StartName       = "contos00\_ssrs"
     StartPassword   = "c0mp1Expa~~"
 }
 $serviceCimInstance = Get-CimInstance -ClassName 'Win32_Service' -Filter "Name='$serviceName'";

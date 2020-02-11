@@ -29,7 +29,7 @@ try
             $securedPassword = ConvertTo-SecureString $pfxPassword -AsPlainText -Force
             $pfxCredential = New-Object System.Management.Automation.PSCredential( "fake", $securedPassword )
 
-            $hostName = "intranet.contoso.local";
+            $hostName = "intranet.contos00.local";
             $pfxPath = "c:\certs\$hostName.pfx";
             $cerPath = "c:\certs\$hostName.cer";
             $pfx = New-Object -TypeName "System.Security.Cryptography.X509Certificates.X509Certificate2";
@@ -57,7 +57,7 @@ try
                 ProxyName               = "Managed Metadata Service Application";
                 Name                    = "Managed Metadata Service Application";
                 Ensure                  = "Present";
-                TermStoreAdministrators = @( $SPInstallAccountCredential.UserName, "contoso\OG SharePoint2016 Server Admin Prod" );
+                TermStoreAdministrators = @( $SPInstallAccountCredential.UserName, "contos00\OG SharePoint2016 Server Admin Prod" );
                 PsDscRunAsCredential    = $SPInstallAccountCredential
                 DependsOn               = "[SPServiceAppPool]SharePointServicesAppPool"
             }
@@ -120,7 +120,7 @@ try
 
             SPSite DefaultHostNamedSite
             {
-                Url                         = "https://intranet.contoso.local"
+                Url                         = "https://intranet.contos00.local"
                 OwnerAlias                  = $SPInstallAccountCredential.UserName
                 Name                        = "Default Team Site"
                 Template                    = "BDR#0"
@@ -131,7 +131,7 @@ try
 
             SPSite PersonDocumentsSite
             {
-                Url                         = "https://intranet.contoso.local/sites/person"
+                Url                         = "https://intranet.contos00.local/sites/person"
                 OwnerAlias                  = $SPInstallAccountCredential.UserName
                 Name                        = "Default Team Site"
                 Template                    = "SPSMSITEHOST#0"
@@ -142,7 +142,7 @@ try
 
             SPSite CrmDocumentsSite
             {
-                Url                         = "https://intranet.contoso.local/sites/crmdocuments"
+                Url                         = "https://intranet.contos00.local/sites/crmdocuments"
                 OwnerAlias                  = $SPInstallAccountCredential.UserName
                 Name                        = "Default Team Site"
                 Template                    = "BDR#0"
@@ -159,7 +159,7 @@ try
                 SocialDBName            = "SP_Intra_Profile_Social"
                 SyncDBName              = "SP_Intra_Profile_Sync"
                 EnableNetBIOS           = $false
-                MySiteHostLocation      = "https://intranet.contoso.local/sites/person"
+                MySiteHostLocation      = "https://intranet.contos00.local/sites/person"
                 PsDscRunAsCredential    = $SPInstallAccountCredential
                 DependsOn               = "[SPSite]PersonDocumentsSite"
             }
@@ -204,7 +204,7 @@ try
                         Port = 443
                         CertificateThumbprint = $pfx.thumbprint
                         CertificateStoreName = "My"
-                        HostName = "intranet.contoso.local"
+                        HostName = "intranet.contos00.local"
                         SslFlags = 1
                     }
                 )
@@ -221,9 +221,9 @@ catch
     Exit 1;
 }
 $securedPassword = ConvertTo-SecureString "c0mp1Expa~~" -AsPlainText -Force
-$SPInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spadm", $securedPassword );
-$SPServicesAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spsrv", $securedPassword );
-$SPWebAppPoolAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spwebapppool", $securedPassword );
+$SPInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_spadm", $securedPassword );
+$SPServicesAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_spsrv", $securedPassword );
+$SPWebAppPoolAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_spwebapppool", $securedPassword );
 
 $configurationData = @{ AllNodes = @(
     @{ NodeName = $env:COMPUTERNAME; PSDscAllowPlainTextPassword = $True; PsDscAllowDomainUser = $True }

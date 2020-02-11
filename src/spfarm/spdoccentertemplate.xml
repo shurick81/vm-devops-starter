@@ -2,16 +2,16 @@
 <pnp:Provisioning xmlns:pnp="http://schemas.dev.office.com/PnP/2019/09/ProvisioningSchema">
     <pnp:Preferences Author="Aleks" Version="1.0" Generator="Human being :-)">
     </pnp:Preferences>
-    <pnp:Templates ID="contoso">
-        <pnp:ProvisioningTemplate ID="contosocrmspdoccenter" Version="1" BaseSiteTemplate="BDR#0">
+    <pnp:Templates ID="contos00">
+        <pnp:ProvisioningTemplate ID="contos00crmspdoccenter" Version="1" BaseSiteTemplate="BDR#0">
             <pnp:Security BreakRoleInheritance="true" CopyRoleAssignments="false" ClearSubscopes="true">
                 <pnp:SiteGroups>
                     <pnp:SiteGroup
                         Title="CRM administrators"
                         Description="Users who can adopt this site for using with CRM"
-                        Owner="contoso\_spadm">
+                        Owner="contos00\_spadm">
                         <pnp:Members>
-                            <pnp:User Name="contoso\CRM01PrivUserGroup" />
+                            <pnp:User Name="contos00\CRM01PrivUserGroup" />
                         </pnp:Members>
                     </pnp:SiteGroup>
                 </pnp:SiteGroups>

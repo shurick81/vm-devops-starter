@@ -17,7 +17,7 @@ try
         Import-DscResource -ModuleName PSDesiredStateConfiguration
         Import-DscResource -ModuleName ActiveDirectoryDsc -ModuleVersion 5.0.0
 
-        $domainName = "contoso.local";
+        $domainName = "contos00.local";
 
         Node $AllNodes.NodeName
         {
@@ -66,8 +66,8 @@ $configurationData = @{ AllNodes = @(
 ) }
 
 $securedPassword = ConvertTo-SecureString "c0mp1Expa~~" -AsPlainText -Force
-$SPInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spadm", $securedPassword );
-$SPFarmAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spfrm", $securedPassword );
+$SPInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_spadm", $securedPassword );
+$SPFarmAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_spfrm", $securedPassword );
 Write-Host "$(Get-Date) Compiling DSC"
 try
 {

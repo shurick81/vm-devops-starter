@@ -1,5 +1,5 @@
 $certPassword = "576eeec5667";
-$hostName = "crmsigning.contoso.local";
+$hostName = "crmsigning.contos00.local";
 $pfxPass = ConvertTo-SecureString $certPassword -AsPlainText -Force;
 
 # For Windows Server 2016 only
@@ -32,7 +32,7 @@ $cert = new-object -com "X509Enrollment.CX509CertificateRequestCertificate.1"
 $cert.InitializeFromPrivateKey(2, $key, "")
 $cert.Subject = $name
 $cert.Issuer = $cert.Subject
-$cert.NotBefore = Get-Date
+$cert.NotBefore = ( Get-Date ).AddDays( -1 )
 $cert.NotAfter = $cert.NotBefore.AddYears(10)
 $cert.X509Extensions.Add($ekuext)
 $cert.HashAlgorithm = $hashAlgorithm 

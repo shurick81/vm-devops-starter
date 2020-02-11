@@ -21,16 +21,16 @@ try
             {
                 Name    = "crm"
                 Type    = "CName"
-                Target  = "DBDYN01.contoso.local"
-                Zone    = "contoso.local"
+                Target  = "DBDYN01.contos00.local"
+                Zone    = "contos00.local"
             }
 
             xDnsRecord Intranet
             {
                 Name    = "intranet"
                 Type    = "CName"
-                Target  = "DBSP01.contoso.local"
-                Zone    = "contoso.local"
+                Target  = "DBSP01.contos00.local"
+                Zone    = "contos00.local"
             }
 
         }
@@ -47,7 +47,7 @@ $configurationData = @{ AllNodes = @(
 ) }
 
 $securedPassword = ConvertTo-SecureString "Fractalsol365" -AsPlainText -Force
-$OOSPfxCredential = New-Object System.Management.Automation.PSCredential( "contoso\vagrant", $securedPassword )
+$OOSPfxCredential = New-Object System.Management.Automation.PSCredential( "contos00\vagrant", $securedPassword )
 Write-Host "$(Get-Date) Compiling DSC"
 try
 {

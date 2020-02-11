@@ -13,7 +13,7 @@ Run in PowerShell:
 Set-ExecutionPolicy Bypass -Force;
 iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 choco install -y packer
-choco install -y vagrant --version 2.2.3
+choco install -y vagrant --version 2.2.7
 ```
 Then reboot for finishing insalling Vagrant and continue with the following snippet:
 ```PowerShell
@@ -51,7 +51,7 @@ If PowerShell scripts are allowed on the machine, run `..\localdeploy.ps1`. Othe
 
 Run `vagrant rdp ADDBDYN01` or RDP to `127.0.0.1:13390`
 
-account: `contoso\_crmadmin`
+account: `contos00\_crmadmin`
 
 pass: `c0mp1Expa~~`
 
@@ -92,7 +92,7 @@ If PowerShell scripts are allowed on the machine, run `..\localdeploy.ps1`. Othe
 
 Run `vagrant rdp DBDYN01` or RDP to `127.0.0.1:13391`
 
-account: `contoso\_crmadmin`
+account: `contos00\_crmadmin`
 
 pass: `c0mp1Expa~~`
 

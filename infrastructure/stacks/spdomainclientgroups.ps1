@@ -20,7 +20,7 @@ try
             {
                 GroupName           = "Administrators"
                 Credential          = $DomainAdminCredential
-                MembersToInclude    = "contoso\OG SharePoint2016 Server Admin Prod"
+                MembersToInclude    = "contos00\OG SharePoint2016 Server Admin Prod"
             }
 
         }
@@ -37,7 +37,7 @@ $configurationData = @{ AllNodes = @(
 ) }
 
 $securedPassword = ConvertTo-SecureString "Fractalsol365" -AsPlainText -Force
-$DomainAdminCredential = New-Object System.Management.Automation.PSCredential( "contoso\vagrant", $securedPassword )
+$DomainAdminCredential = New-Object System.Management.Automation.PSCredential( "contos00\vagrant", $securedPassword )
 Write-Host "$(Get-Date) Compiling DSC"
 try
 {

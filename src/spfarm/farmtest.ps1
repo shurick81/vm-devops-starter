@@ -1,8 +1,8 @@
 Try
 {
     $securedPassword = ConvertTo-SecureString "c0mp1Expa~~" -AsPlainText -Force
-    $SPInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spadm", $securedPassword );
-    $farm = Invoke-Command DBSP01.contoso.local -Credential $SPInstallAccountCredential -Authentication CredSSP { Invoke-SPDSCCommand -ScriptBlock {
+    $SPInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_spadm", $securedPassword );
+    $farm = Invoke-Command DBSP01.contos00.local -Credential $SPInstallAccountCredential -Authentication CredSSP { Invoke-SPDSCCommand -ScriptBlock {
         Get-SPFarm;
     }}
     if ( $db ) {

@@ -49,7 +49,7 @@ try
         Import-DscResource -ModuleName PSDesiredStateConfiguration
         Import-DscResource -ModuleName ActiveDirectoryDsc -ModuleVersion 5.0.0
 
-        $domainName = "contoso.local";
+        $domainName = "contos00.local";
 
         Node $AllNodes.NodeName
         {
@@ -170,16 +170,16 @@ $configurationData = @{ AllNodes = @(
 ) }
 
 $securedPassword = ConvertTo-SecureString "c0mp1Expa~~" -AsPlainText -Force
-$DomainAdminCredential = New-Object System.Management.Automation.PSCredential( "contoso\dauser1", $securedPassword );
-$SQLServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_sqlsvc", $securedPassword );
-$SQLAgentAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_sqlagent", $securedPassword );
-$SPWebAppPoolAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spwebapppool", $securedPassword );
-$SPServicesAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spsrv", $securedPassword );
-$SPSearchServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spsrchsrv", $securedPassword );
-$SPCrawlerAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spcrawler", $securedPassword );
-$SPOCAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_spocuser", $securedPassword );
-$SPTestAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_sptestuser161", $securedPassword );
-$SPSecondTestAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_sptestuser162", $securedPassword );
+$DomainAdminCredential = New-Object System.Management.Automation.PSCredential( "contos00\dauser1", $securedPassword );
+$SQLServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_sqlsvc", $securedPassword );
+$SQLAgentAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_sqlagent", $securedPassword );
+$SPWebAppPoolAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_spwebapppool", $securedPassword );
+$SPServicesAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_spsrv", $securedPassword );
+$SPSearchServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_spsrchsrv", $securedPassword );
+$SPCrawlerAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_spcrawler", $securedPassword );
+$SPOCAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_spocuser", $securedPassword );
+$SPTestAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_sptestuser161", $securedPassword );
+$SPSecondTestAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_sptestuser162", $securedPassword );
 Write-Host "$(Get-Date) Compiling DSC"
 try
 {

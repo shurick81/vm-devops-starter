@@ -20,7 +20,7 @@ try
             Computer JoinDomain
             {
                 Name        = $NodeName
-                DomainName  = "contoso.local"
+                DomainName  = "contos00.local"
                 Credential  = $DomainAdminCredential
             }
 
@@ -38,7 +38,7 @@ $configurationData = @{ AllNodes = @(
 ) }
 
 $securedPassword = ConvertTo-SecureString "Fractalsol365" -AsPlainText -Force
-$DomainAdminCredential = New-Object System.Management.Automation.PSCredential( "contoso\vagrant", $securedPassword )
+$DomainAdminCredential = New-Object System.Management.Automation.PSCredential( "contos00\vagrant", $securedPassword )
 Write-Host "$(Get-Date) Compiling DSC"
 try
 {

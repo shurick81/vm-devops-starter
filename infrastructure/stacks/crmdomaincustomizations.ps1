@@ -42,7 +42,7 @@ try
         Import-DscResource -ModuleName PSDesiredStateConfiguration
         Import-DscResource -ModuleName ActiveDirectoryDsc -ModuleVersion 5.0.0
 
-        $domainName = "contoso.local";
+        $domainName = "contos00.local";
 
         Node $AllNodes.NodeName
         {
@@ -114,7 +114,7 @@ try
             ADOrganizationalUnit CRMGroupsOU
             {
                Name = "CRM groups"
-               Path = "DC=contoso,DC=local"
+               Path = "DC=contos00,DC=local"
             }
 
             ADGroup CRMPrivUserGroup
@@ -122,15 +122,15 @@ try
                 GroupName           = "CRM01PrivUserGroup"
                 MembersToInclude    = $CRMInstallAccountCredential.GetNetworkCredential().UserName
                 GroupScope          = "Universal"
-                Path                = 'OU=CRM groups,DC=contoso,DC=local'
+                Path                = 'OU=CRM groups,DC=contos00,DC=local'
                 DependsOn           = "[ADOrganizationalUnit]CRMGroupsOU", "[ADUser]CRMInstallAccountUser"
             }
             
             ADObjectPermissionEntry OUPermissions
             {
                 Ensure                              = 'Present'
-                Path                                = 'OU=CRM groups,DC=contoso,DC=local'
-                IdentityReference                   = 'contoso\CRM01PrivUserGroup'
+                Path                                = 'OU=CRM groups,DC=contos00,DC=local'
+                IdentityReference                   = 'contos00\CRM01PrivUserGroup'
                 ActiveDirectoryRights               = 'GenericAll'
                 AccessControlType                   = 'Allow'
                 ObjectType                          = '00000000-0000-0000-0000-000000000000'
@@ -143,14 +143,14 @@ try
             {
                 GroupName   = "CRM01SQLAccessGroup"
                 GroupScope  = "Universal"
-                Path        = 'OU=CRM groups,DC=contoso,DC=local'
+                Path        = 'OU=CRM groups,DC=contos00,DC=local'
                 DependsOn   = "[ADOrganizationalUnit]CRMGroupsOU"
             }
 
             ADGroup CRMUserGroup
             {
                 GroupName   = "CRM01UserGroup"
-                Path        = 'OU=CRM groups,DC=contoso,DC=local'
+                Path        = 'OU=CRM groups,DC=contos00,DC=local'
                 DependsOn   = "[ADOrganizationalUnit]CRMGroupsOU"
             }
 
@@ -158,7 +158,7 @@ try
             {
                 GroupName   = "CRM01ReportingGroup"
                 GroupScope  = "Universal"
-                Path        = 'OU=CRM groups,DC=contoso,DC=local'
+                Path        = 'OU=CRM groups,DC=contos00,DC=local'
                 DependsOn   = "[ADOrganizationalUnit]CRMGroupsOU"
             }
 
@@ -167,14 +167,15 @@ try
                 GroupName           = "CRM01PrivReportingGroup"
                 MembersToInclude    = $SqlRSAccountCredential.GetNetworkCredential().UserName
                 GroupScope          = "Universal"
-                Path                = 'OU=CRM groups,DC=contoso,DC=local'
+                Path                = 'OU=CRM groups,DC=contos00,DC=local'
                 DependsOn           = "[ADOrganizationalUnit]CRMGroupsOU"
             }
             
             ADGroup EnterpriseAdminGroup
             {
-                GroupName   = "Enterprise Admins"
+                GroupName           = "Enterprise Admins"
                 MembersToInclude    = $CRMInstallAccountCredential.GetNetworkCredential().UserName
+                DependsOn           = "[ADUser]CRMInstallAccountUser"
             }
 
         }
@@ -191,14 +192,14 @@ $configurationData = @{ AllNodes = @(
 ) }
 
 $securedPassword = ConvertTo-SecureString "c0mp1Expa~~" -AsPlainText -Force
-$SqlRSAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_ssrs", $securedPassword );
-$CRMInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmadmin", $securedPassword );
-$CRMServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmsrv", $securedPassword );
-$DeploymentServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmdplsrv", $securedPassword );
-$SandboxServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmsandbox", $securedPassword );
-$VSSWriterServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmvsswrit", $securedPassword );
-$AsyncServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmasync", $securedPassword );
-$MonitoringServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contoso\_crmmon", $securedPassword );
+$SqlRSAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_ssrs", $securedPassword );
+$CRMInstallAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_crmadmin", $securedPassword );
+$CRMServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_crmsrv", $securedPassword );
+$DeploymentServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_crmdplsrv", $securedPassword );
+$SandboxServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_crmsandbox", $securedPassword );
+$VSSWriterServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_crmvsswrit", $securedPassword );
+$AsyncServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_crmasync", $securedPassword );
+$MonitoringServiceAccountCredential = New-Object System.Management.Automation.PSCredential( "contos00\_crmmon", $securedPassword );
 Write-Host "$(Get-Date) Compiling DSC"
 try
 {

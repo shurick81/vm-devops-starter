@@ -42,7 +42,7 @@ if ( !$ADSI.Guid ) {
 $ADSI = [ADSI]"LDAP://$templateCnName,CN=Certificate Templates,CN=Public Key Services,CN=Services,$ConfigContext";
 if ( $ADSI.Guid ) {
     $ADSI = [ADSI]"LDAP://CN=$templateName,CN=Certificate Templates,CN=Public Key Services,CN=Services,$configContext";
-    $rules = $ADSI.psbase.ObjectSecurity.Access | ? { ( $_.IdentityReference -eq "contoso\OPS01$" ) -and ( $_.ActiveDirectoryRights -band [System.DirectoryServices.ActiveDirectoryRights]::ExtendedRight ) }
+    $rules = $ADSI.psbase.ObjectSecurity.Access | ? { ( $_.IdentityReference -eq "contos00\OPS01$" ) -and ( $_.ActiveDirectoryRights -band [System.DirectoryServices.ActiveDirectoryRights]::ExtendedRight ) }
     if ( !$rules ) {
         $AdObj = New-Object System.Security.Principal.NTAccount("OPS01$")
         $identity = $AdObj.Translate([System.Security.Principal.SecurityIdentifier])
