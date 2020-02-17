@@ -30,6 +30,31 @@ Disable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All
 choco install -y virtualbox
 ```
 
+### Azure prerequisites
+
+The only virtualization provider currenlty supported by this project is Azure, so before using this tool, please install necessary components and set variables.
+
+#### Vagrant Azure Provider
+
+In order to install this plugin with the necessary fixes, run
+
+```
+vagrant plugin install vagrant-azure
+Rename-Item -Path $env:USERPROFILE\.vagrant.d\gems\2.4.4\gems\vagrant-azure-2.2.7 -NewName "vagrant-azure-2.2.7 - Copy";
+git clone https://github.com/shurick81/vagrant-azure $env:USERPROFILE\.vagrant.d\gems\2.4.4\gems\vagrant-azure-2.2.7;
+```
+
+#### Environmental variables
+
+1. Create application and assign proper roles for managing Azure resources
+2. Set values for following environment variables:
+* ARM_CLIENT_ID
+* ARM_CLIENT_SECRET
+* ARM_SUBSCRIPTION_ID
+* ARM_TENANT_ID
+
+Use https://www.packer.io/docs/builders/azure-setup.html or https://github.com/Azure/vagrant-azure as a baseline.
+
 # Single-machine environment
 
 ## Creating
